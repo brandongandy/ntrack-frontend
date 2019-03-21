@@ -6,7 +6,7 @@
         <b-card
           title="Words Written Today">
           <b-card-text><h2>0</h2></b-card-text>
-          <b-card-text><span class="text-muted">Goal: </span>1667</b-card-text>
+          <b-card-text><span class="text-muted">Goal: </span>{{ this.goal }}</b-card-text>
           <b-button variant="primary" size="sm" v-b-modal.update-goal>Add Words</b-button>
           <b-button variant="info" size="sm">Change Goal</b-button>
         </b-card>
@@ -38,11 +38,30 @@ import UpdateGoal from '../components/UpdateGoal'
 export default {
   data () {
     return {
-      msg: this.$auth.user.name
+      msg: this.$auth.user.name,
+      goal: 0
+    }
+  },
+  computed: {
+    goalObj: {
+      get: function () {
+        return this.goal
+      },
+      set: function (val) {
+        this.goal = val
+      }
     }
   },
   components: {
     UpdateGoal
+  },
+  created () {
+    let user = JSON.parse(localStorage.getItem('user'))
+    this.$axios.get('/resources/goals?sub=' + user.sub)
+      .then((res) => {
+        console.log(res.data[0].goal_amount)
+        this.goalObj = res.data[0].goal_amount
+      })
   }
 }
 </script>

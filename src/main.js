@@ -7,9 +7,11 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 import App from './App'
 import router from './router'
 import auth from '@/auth'
+import axios from './plugins/axios'
 
 Vue.config.productionTip = false
 Vue.use(auth)
+Vue.use(axios)
 Vue.use(BootstrapVue)
 
 /* eslint-disable no-new */
