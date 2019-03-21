@@ -123,11 +123,42 @@ export default {
   methods: {
     onSubmit (e) {
       e.preventDefault()
+
+      let project = {
+        'user_id': this.userId,
+        'name': this.newProjectForm.name,
+        'type': this.newProjectForm.type,
+        'blurb': this.newProjectForm.blurb,
+        'goal_type': this.newProjectForm.goalType,
+        'goal_amount': this.newProjectForm.goalAmount,
+        'due_date': this.newProjectForm.dueDate
+      }
+
+      this.postProject(project)
+
       this.$router.push('/projects')
     },
     onReset (e) {
       e.preventDefault()
       this.$router.go(-1)
+    },
+    postProject (payload) {
+      console.log(payload)
+      this.$axios.post('/projects', payload).then(
+        res => {
+          console.log('ok!')
+        },
+        err => {
+          console.log(err)
+        }
+      )
+    }
+  },
+  computed: {
+    userId: {
+      get: function () {
+        return JSON.parse(localStorage.getItem('user')).sub
+      }
     }
   },
   created () {

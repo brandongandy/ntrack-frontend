@@ -57,11 +57,15 @@ export default {
   },
   created () {
     let user = JSON.parse(localStorage.getItem('user'))
-    this.$axios.get('/resources/goals?sub=' + user.sub)
-      .then((res) => {
-        console.log(res.data[0].goal_amount)
-        this.goalObj = res.data[0].goal_amount
-      })
+    this.$axios.get('/goals?user_id=' + user.sub)
+      .then(
+        res => {
+          this.goalObj = res.data[0].goal_amount
+        },
+        err => {
+          console.log(err)
+        }
+      )
   }
 }
 </script>
