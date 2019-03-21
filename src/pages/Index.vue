@@ -8,7 +8,7 @@
           <b-card-text><h2>0</h2></b-card-text>
           <b-card-text><span class="text-muted">Goal: </span>{{ this.goal }}</b-card-text>
           <b-button variant="primary" size="sm" v-b-modal.update-goal>Add Words</b-button>
-          <b-button variant="info" size="sm">Change Goal</b-button>
+          <b-button variant="info" size="sm" v-b-modal.work-goal>Change Goal</b-button>
         </b-card>
       </b-col>
       <b-col sm="12" md="4">
@@ -29,11 +29,13 @@
       </b-col>
     </b-row>
     <update-goal project-name="sdgf" />
+    <work-goal />
   </b-container>
 </template>
 
 <script>
 import UpdateGoal from '../components/UpdateGoal'
+import WorkGoal from '../components/WorkGoal'
 
 export default {
   data () {
@@ -53,7 +55,8 @@ export default {
     }
   },
   components: {
-    UpdateGoal
+    UpdateGoal,
+    WorkGoal
   },
   created () {
     let user = JSON.parse(localStorage.getItem('user'))
