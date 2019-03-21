@@ -46,6 +46,11 @@ let auth = new Vue({
       set: function (user) {
         localStorage.setItem('user', JSON.stringify(user))
       }
+    },
+    userId: {
+      get: function () {
+        return this.user.sub
+      }
     }
   },
   methods: {
