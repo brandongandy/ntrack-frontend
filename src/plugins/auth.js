@@ -1,6 +1,6 @@
 import auth0 from 'auth0-js'
 import Vue from 'vue'
-import authConfig from '../auth_config.json'
+import authConfig from '../../auth_config.json'
 
 // exchange the object with your
 // eslint-disable-next-line
