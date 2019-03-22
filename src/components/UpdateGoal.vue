@@ -4,7 +4,8 @@
     ref="modal"
     :title="title"
     hide-footer
-    class="text-left">
+    class="text-left"
+    @shown="onShow">
     <b-form @submit="onSubmit" @reset="onReset" class="w200">
       <b-form-group
         id="project-goal-type"
@@ -12,10 +13,10 @@
         label-for="project-select">
         <b-form-select
           id="project-select-input"
-          v-model="projectID"
-          required disabled>
+          v-model="initialProject"
+          required :disabled="loading">
           <template slot="first">
-            <option :value="null">{{ projectName }}</option>
+            <option :value="null">Pick a project</option>
           </template>
         </b-form-select>
       </b-form-group>
@@ -60,13 +61,15 @@
 
 <script>
 export default {
-  props: ['projectName'],
+  props: ['projectId'],
   data () {
     return {
       title: 'Add Words',
-      projectID: null,
       amount: 0,
-      addType: 0
+      addType: 0,
+      loading: true,
+      initialProject: this.projectId,
+      projects: []
     }
   },
   methods: {
@@ -75,8 +78,45 @@ export default {
     },
     onReset (e) {
       e.preventDefault()
-      this.$refs.modal.hide()
+      console.log(this.projects)
+      let projList = this.projects.map(project => {
+        var res = {}
+        res[project.id] = project.name
+        return res
+      })
+      console.log(projList)
+    },
+    onShow () {
+      if (this.initialProject === null ||
+          this.initialProject === undefined) {
+        this.$axios.get('/projects/all').then(
+          res => {
+            this.projects = res.data
+            this.loading = false
+          },
+          err => {
+            console.log(err)
+          }
+        )
+      } else {
+        this.loading = false
+      }
     }
+  },
+  computed: {
+    projectList: {
+      get () {
+        let projList = this.projects.map(project => {
+          var res = {}
+          res[project.id] = project.name
+          return res
+        })
+        console.log(projList)
+        return 0
+      }
+    }
+  },
+  mounted () {
   }
 }
 </script>

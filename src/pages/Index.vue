@@ -27,7 +27,7 @@
         </b-card>
       </b-col> -->
     </b-row>
-    <update-goal project-name="sdgf" />
+    <update-goal />
     <work-goal />
   </b-container>
 </template>
