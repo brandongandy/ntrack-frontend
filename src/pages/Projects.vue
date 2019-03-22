@@ -20,26 +20,35 @@
 
     <b-row>
       <b-col>
-      <table class="table table-hover">
-        <thead>
-          <tr>
-            <th scope="col">Project Name</th>
-            <th scope="col">Progress</th>
-            <th scope="col">Due Date</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="(item, index) in items" :key="index">
-            <td>{{ item.projectName }}</td>
-            <td>{{ item.progress }}</td>
-            <td>{{ item.dueDate }}</td>
-            <td>
-              <b-button variant="primary" size="sm" @click="go(item.projectName)">View</b-button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+        <!-- <table class="table table-hover">
+          <thead>
+            <tr>
+              <th scope="col">Project Name</th>
+              <th scope="col">Progress</th>
+              <th scope="col">Due Date</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(item, index) in items" :key="index">
+              <td>{{ item.projectName }}</td>
+              <td>{{ item.progress }}</td>
+              <td>{{ item.dueDate }}</td>
+              <td>
+                <b-button variant="primary" size="sm" @click="go(item.projectName)">View</b-button>
+              </td>
+            </tr>
+          </tbody>
+        </table> -->
+        <b-table :items="projects" :fields="fields" :busy="loading">
+          <div slot="table-busy" class="text-center text-danger my-2">
+            <b-spinner class="align-middle" />
+            <strong>Loading...</strong>
+          </div>
+          <template slot="view_project" slot-scope="data">
+            <b-button variant="success" @click="go(data)">View</b-button>
+          </template>
+        </b-table>
       </b-col>
     </b-row>
     <b-row align-h="end">
@@ -58,18 +67,26 @@
 export default {
   data () {
     return {
-      items: [
-        { projectName: 'Great Expectations', projectType: 'Novel', progress: '23,596 / 80,000', dueDate: '2019-04-30', isFinished: false },
-        { projectName: '1Q84', projectType: 'Short Story / Other', progress: '8,123 / 8,000', dueDate: '2019-02-01', isFinished: true },
-        { projectName: 'Catch-22', projectType: 'Novel', progress: '50,000 / 50,000', dueDate: '2019-03-15', isFinished: true },
-        { projectName: 'Essays', projectType: 'Article / Essay', progress: '0', dueDate: '2019-12-01', isFinished: false }
-      ]
+      loading: true,
+      fields: ['name', 'goal_amount', 'due_date', 'view_project'],
+      projects: []
     }
   },
   methods: {
-    go (rowID) {
-      this.$router.push('/project/' + rowID)
+    go (data) {
+      this.$router.push('/project/' + data.item.name)
     }
+  },
+  mounted () {
+    this.$axios.get('/projects/all').then(
+      res => {
+        this.projects = res.data
+        this.loading = false
+      },
+      err => {
+        console.log(err)
+      }
+    )
   }
 }
 </script>
