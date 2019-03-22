@@ -13,10 +13,11 @@
         label-for="project-select">
         <b-form-select
           id="project-select-input"
-          v-model="initialProject"
-          required :disabled="loading">
+          v-model="projectId"
+          :options="projectList"
+          required :disabled="!canChangeProject">
           <template slot="first">
-            <option :value="null">Pick a project</option>
+            <option :value="undefined" disabled>-- Pick a project --</option>
           </template>
         </b-form-select>
       </b-form-group>
@@ -42,7 +43,7 @@
         <b-form-select
           id="goal-update-type-select"
           v-model="addType"
-          required>
+          required disabled>
             <option :value="null">-- Choose Update Type --</option>
             <option :value="0">Add to Total</option>
             <option :value="1">Update Total</option>
@@ -61,62 +62,57 @@
 
 <script>
 export default {
-  props: ['projectId'],
+  props: ['project'],
   data () {
     return {
       title: 'Add Words',
       amount: 0,
       addType: 0,
-      loading: true,
-      initialProject: this.projectId,
-      projects: []
+      canChangeProject: false,
+      projectId: this.projectId,
+      projectList: []
     }
   },
   methods: {
     onSubmit (e) {
       e.preventDefault()
+      let payload = [{
+        'user_id': this.$auth.userId,
+        'project_id': this.projectId,
+        'amount': this.amount,
+        'add_type': this.addType,
+        'work_date': ''
+      }]
+
+      console.log(payload)
     },
     onReset (e) {
       e.preventDefault()
-      console.log(this.projects)
-      let projList = this.projects.map(project => {
-        var res = {}
-        res[project.id] = project.name
-        return res
-      })
-      console.log(projList)
     },
     onShow () {
-      if (this.initialProject === null ||
-          this.initialProject === undefined) {
+      if (!this.projectId) {
         this.$axios.get('/projects/all').then(
           res => {
-            this.projects = res.data
-            this.loading = false
+            let projects = res.data
+
+            let projList = projects.map(project => {
+              return {
+                value: project.id,
+                text: project.name
+              }
+            })
+            this.projectList = projList
+
+            this.canChangeProject = true
           },
           err => {
             console.log(err)
           }
         )
       } else {
-        this.loading = false
+        this.canChangeProject = false
       }
     }
-  },
-  computed: {
-    projectList: {
-      get () {
-        let projList = this.projects.map(project => {
-          var res = {}
-          res[project.id] = project.name
-          return res
-        })
-        console.log(projList)
-        return 0
-      }
-    }
-  },
-  mounted () {
   }
 }
 </script>

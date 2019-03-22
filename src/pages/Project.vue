@@ -48,7 +48,7 @@
     </b-row>
 
       <b-col><b-button variant="light" size="sm" @click="toggleBusy()">Toggle Busy Table</b-button></b-col>
-    <update-goal ref="updateDialog" :project-name="project" />
+    <update-goal ref="updateDialog" :project-id="project" />
   </b-container>
 </template>
 
