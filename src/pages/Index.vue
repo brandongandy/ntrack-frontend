@@ -12,7 +12,7 @@
       </b-col>
       <b-col sm="6" class="mt-2">
         <b-card title="Last Updated Project">
-          <b-card-text><h2>1Q84</h2></b-card-text>
+          <b-card-text><h2>{{ latestProject.name }}</h2></b-card-text>
           <b-card-text><span class="text-muted">Type: </span>Novel</b-card-text>
           <b-button variant="primary" size="sm" to="/project/12">View Details</b-button>
           <b-button variant="success" size="sm" to="/new-project">Start New Project</b-button>
@@ -40,7 +40,11 @@ export default {
   data () {
     return {
       msg: this.$auth.user.name,
-      goal: 0
+      goal: 0,
+      latestProject: {
+        id: null,
+        name: 'No projects yet!'
+      }
     }
   },
   computed: {
@@ -57,7 +61,7 @@ export default {
     UpdateGoal,
     WorkGoal
   },
-  created () {
+  mounted () {
     let user = JSON.parse(localStorage.getItem('user'))
     this.$axios.get('/goals?user_id=' + user.sub)
       .then(
@@ -68,6 +72,15 @@ export default {
           console.log(err)
         }
       )
+
+    this.$axios.get('/projects?latest=true').then(
+      res => {
+        this.latestProject = res.data
+      },
+      err => {
+        console.log(err)
+      }
+    )
   }
 }
 </script>
