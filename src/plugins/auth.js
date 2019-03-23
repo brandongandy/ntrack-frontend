@@ -2,14 +2,15 @@ import auth0 from 'auth0-js'
 import Vue from 'vue'
 import authConfig from '../../auth_config.json'
 
-// exchange the object with your
+// todo: make this use the auth config json...
 // eslint-disable-next-line
 let webAuth = new auth0.WebAuth({
   domain: 'ntrack.auth0.com',
   clientID: '3Eqou2Vrji1OHJQ3ojsX5VnuqVJjwp8n',
   redirectUri: 'http://localhost:8080/callback',
   responseType: 'token id_token',
-  scope: 'openid profile email'
+  scope: 'openid profile email',
+  audience: 'https://ntrack/api'
 })
 
 let auth = new Vue({
