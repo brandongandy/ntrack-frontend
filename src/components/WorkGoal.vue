@@ -4,7 +4,8 @@
     ref="modal"
     :title="title"
     hide-footer
-    class="text-left">
+    class="text-left"
+    @shown="onShown">
     <b-form @submit="onSubmit" @reset="onReset" class="w200">
       <b-form-group
         id="goal-type"
@@ -15,7 +16,7 @@
           v-model="goalTypeId"
           required disabled>
           <template slot="first">
-            <option :value="0">Words Per Day</option>
+            <option :value="0">{{ this.newGoal.goal_type }}</option>
           </template>
         </b-form-select>
       </b-form-group>
@@ -28,7 +29,7 @@
           id="update-amount-input"
           ref="amount"
           type="number"
-          v-model="amount"
+          v-model="newGoal.goal_amount"
           required
           placeholder="Project Goal">
         </b-form-input>
@@ -46,34 +47,57 @@
 
 <script>
 export default {
-  props: ['projectName'],
+  props: ['goal'],
   data () {
     return {
-      title: 'Set Work Goal',
+      title: 'Set Daily Work Goal',
       goalTypeId: 0,
-      amount: 0,
-      addType: 0
+      addType: 0,
+      newGoal: {}
     }
   },
   methods: {
+    onShown () {
+      this.newGoal = Object.assign({}, this.goal)
+    },
     onSubmit (e) {
       e.preventDefault()
 
       let payload = {
         'user_id': this.$auth.userId,
-        'goal_type': this.goalTypeId,
-        'goal_amount': this.amount
+        'goal_type': this.newGoal.goal_type,
+        'goal_amount': this.newGoal.goal_amount
       }
-      console.log(payload)
-      this.changeGoal(payload)
+
+      this.postGoal(payload)
     },
     onReset (e) {
       e.preventDefault()
-      this.$refs.modal.hide()
+      console.log(this.newGoal.goal_amount)
+      this.closeModal(false)
     },
-    changeGoal (payload) {
-
+    postGoal (payload) {
+      let userId = this.$auth.userId
+      this.$axios.post('/goals?user_id=' + userId, payload).then(
+        res => {
+          if (res.status >= 200 && res.status < 300) {
+            this.newGoal = Object.assign({}, res.data)
+            this.closeModal(true)
+          }
+        },
+        err => {
+          console.log(err)
+        }
+      )
+    },
+    closeModal (success) {
+      if (success) {
+        this.$emit('update:goal', this.newGoal)
+      }
+      this.$refs.modal.hide()
     }
+  },
+  created () {
   }
 }
 </script>

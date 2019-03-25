@@ -3,9 +3,9 @@
     <h2 class="m-3">Welcome back, {{ this.$auth.user.given_name }}!</h2>
     <b-row>
       <b-col sm="6" class="mt-2">
-        <b-card title="Words Written Today">
+        <b-card :title="`${goal.goal_type} Today`">
           <b-card-text><h2>0</h2></b-card-text>
-          <b-card-text><span class="text-muted">Goal: </span>{{ this.goal }}</b-card-text>
+          <b-card-text><span class="text-muted">Goal: </span>{{ this.goal.goal_amount }}</b-card-text>
           <b-button variant="primary" size="sm" v-b-modal.update-goal>Add Words</b-button>
           <b-button variant="info" size="sm" v-b-modal.work-goal>Change Goal</b-button>
         </b-card>
@@ -28,7 +28,7 @@
       </b-col> -->
     </b-row>
     <update-goal />
-    <work-goal />
+    <work-goal :goal.sync="goalObj" />
   </b-container>
 </template>
 
@@ -40,7 +40,7 @@ export default {
   data () {
     return {
       msg: this.$auth.user.name,
-      goal: 0,
+      goal: {},
       latestProject: {
         id: null,
         name: 'No projects yet!'
@@ -66,7 +66,7 @@ export default {
     this.$axios.get('/goals?user_id=' + user.sub)
       .then(
         res => {
-          this.goalObj = res.data[0].goal_amount
+          this.goalObj = Object.assign({}, res.data[0])
         },
         err => {
           console.log(err)
