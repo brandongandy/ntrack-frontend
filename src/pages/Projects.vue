@@ -17,40 +17,21 @@
         </b-button>
       </b-col>
     </b-row>
-
-    <b-row>
-      <b-col>
-        <!-- <table class="table table-hover">
-          <thead>
-            <tr>
-              <th scope="col">Project Name</th>
-              <th scope="col">Progress</th>
-              <th scope="col">Due Date</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="(item, index) in items" :key="index">
-              <td>{{ item.projectName }}</td>
-              <td>{{ item.progress }}</td>
-              <td>{{ item.dueDate }}</td>
-              <td>
-                <b-button variant="primary" size="sm" @click="go(item.projectName)">View</b-button>
-              </td>
-            </tr>
-          </tbody>
-        </table> -->
-        <b-table :items="projects" :fields="fields" :busy="loading">
-          <div slot="table-busy" class="text-center text-danger my-2">
-            <b-spinner class="align-middle" />
-            <strong>Loading...</strong>
-          </div>
-          <template slot="view_project" slot-scope="data">
-            <b-button variant="success" @click="go(data)">View</b-button>
-          </template>
-        </b-table>
+    <hr />
+    <b-row v-if="loading">
+      <b-col class="text-center text-danger my-2">
+        <b-spinner class="align-middle" />
+        <strong>Loading</strong>
       </b-col>
     </b-row>
+
+    <b-row v-for="project in projects" :key="project.id">
+      <b-col class="my-3">
+        <project-summary :project="project" :inList="true" />
+        <hr />
+      </b-col>
+    </b-row>
+
     <b-row align-h="end">
       <b-col cols="3">
         <b-button
@@ -64,13 +45,47 @@
 </template>
 
 <script>
+import ProjectSummary from '@/components/ProjectSummary'
 export default {
   data () {
     return {
       loading: true,
       fields: ['name', 'goal_amount', 'due_date', 'view_project'],
-      projects: []
+      projects: [],
+      fallback: [
+        {
+          id: 1,
+          user_id: 'google-oauth2|101551280045388809437',
+          name: '1Q84',
+          project_type: 0,
+          blurb: '',
+          goal_type: 0,
+          start_amount: 8123,
+          goal_amount: 25000,
+          start_date: '2019-01-01',
+          due_date: '2019-02-28',
+          last_update: '2019-03-01',
+          is_finished: false
+        },
+        {
+          id: 2,
+          user_id: 'google-oauth2|101551280045388809437',
+          name: 'Great Expectations',
+          project_type: 0,
+          blurb: '',
+          goal_type: 0,
+          start_amount: 8123,
+          goal_amount: 25000,
+          start_date: '2019-01-01',
+          due_date: '2019-02-28',
+          last_update: '2019-03-01',
+          is_finished: false
+        }
+      ]
     }
+  },
+  components: {
+    ProjectSummary
   },
   methods: {
     go (data) {
@@ -84,7 +99,9 @@ export default {
         this.loading = false
       },
       err => {
-        console.log(err)
+        this.$alert.danger({ message: err })
+        this.projects = this.fallback
+        this.loading = false
       }
     )
   }
