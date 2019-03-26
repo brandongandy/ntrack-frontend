@@ -24,7 +24,7 @@
 
       <b-form-group
         id="update-amount"
-        label="Goal Amount:"
+        label="Amount:"
         label-for="update-amount-input">
         <b-form-input
           id="update-amount-input"
@@ -32,7 +32,7 @@
           type="number"
           v-model="amount"
           required
-          placeholder="Project Goal">
+          placeholder="Amount to Add">
         </b-form-input>
       </b-form-group>
 
@@ -81,10 +81,9 @@ export default {
         'project_id': this.projectId,
         'amount': this.amount,
         'add_type': this.addType,
-        'work_date': ''
+        'work_date': new Date().toISOString()
       }]
-
-      console.log(payload)
+      this.postWork(payload)
     },
     onReset (e) {
       e.preventDefault()
@@ -112,6 +111,16 @@ export default {
       } else {
         this.canChangeProject = false
       }
+    },
+    postWork (payload) {
+      this.$axios.post('/entries').then(
+        res => {
+
+        },
+        err => {
+          console.log(err)
+        }
+      )
     }
   }
 }
