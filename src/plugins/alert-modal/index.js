@@ -20,7 +20,7 @@ const alertWrapper = {
             el = el.$parent
           }
           if (process.env.NODE_ENV !== 'production') {
-            console.warn('VueAlert component must be part of this component scope or any of the parent\'s scope.')
+            console.warn('AlertModal component must be part of this component scope or any of the parent\'s scope.')
           }
           return null
         }

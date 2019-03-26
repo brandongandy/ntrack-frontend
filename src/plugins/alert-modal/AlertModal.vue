@@ -6,7 +6,7 @@
         :show="alertShow"
         dismissible
         fade
-        class="w-50 mx-auto mb-5 fixed-bottom position-absolute">{{ alertMessage }}</b-alert>
+        class="mx-auto mb-5 fixed-bottom position-absolute alert-modal">{{ alertMessage }}</b-alert>
     </div>
   </transition>
 </template>
@@ -98,5 +98,8 @@ export default {
 }
 .smooth {
   transition: all 0.5s ease;
+}
+.alert-modal {
+  width: 25em;
 }
 </style>
