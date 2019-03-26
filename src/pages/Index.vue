@@ -1,7 +1,6 @@
 <template>
   <b-container class="col-sm-12 col-lg-6">
     <h2 class="m-3">Welcome back, {{ this.$auth.user.given_name }}!</h2>
-    <b-button @click="showAlert">Show Alert!</b-button>
     <b-row>
       <b-col sm="6" class="mt-2">
         <b-card :title="`${goal.goal_type} Today`">
@@ -62,14 +61,8 @@ export default {
     UpdateGoal,
     WorkGoal
   },
-  methods: {
-    showAlert () {
-      this.$alert.danger({ message: 'Unable to to the thing you wanted to do, sorry about that baws' })
-    }
-  },
   mounted () {
-    let user = JSON.parse(localStorage.getItem('user'))
-    this.$axios.get('/goals?user_id=' + user.sub)
+    this.$axios.get('/goals?user_id=' + this.$auth.userId)
       .then(
         res => {
           this.goalObj = Object.assign({}, res.data[0])
