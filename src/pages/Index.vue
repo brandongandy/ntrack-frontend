@@ -64,7 +64,7 @@ export default {
   },
   methods: {
     showAlert () {
-      this.$alert.success({ message: 'Help me' })
+      this.$alert.danger({ message: 'Unable to to the thing you wanted to do, sorry about that baws' })
     }
   },
   mounted () {
@@ -75,7 +75,7 @@ export default {
           this.goalObj = Object.assign({}, res.data[0])
         },
         err => {
-          console.log(err)
+          this.$alert.danger({ message: err })
         }
       )
 
@@ -84,7 +84,7 @@ export default {
         this.latestProject = res.data
       },
       err => {
-        console.log(err)
+        this.$alert.danger({ message: err })
       }
     )
   }
