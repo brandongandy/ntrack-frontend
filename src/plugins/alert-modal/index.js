@@ -1,3 +1,5 @@
+// credit for component: https://github.com/vuejs-pt/vue-alert
+
 import AlertModal from './AlertModal'
 
 const alertWrapper = {
