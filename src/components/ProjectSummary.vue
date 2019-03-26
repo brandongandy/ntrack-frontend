@@ -6,7 +6,7 @@
       </b-col>
       <b-col lg="6" class="text-right">
         <span>
-          <b-button size="sm" variant="success" v-if="inList">View</b-button>
+          <b-button size="sm" variant="success" v-if="inList" @click="$router.push('project/' + project.id)">View</b-button>
           <b-button size="sm" variant="success" v-else>Edit</b-button>
         </span>
       </b-col>
