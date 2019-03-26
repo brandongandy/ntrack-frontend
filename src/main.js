@@ -4,15 +4,17 @@ import Vue from 'vue'
 import BootstrapVue from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
-import App from './App'
-import router from './router'
+import App from '@/App'
+import router from '@/router'
 import auth from '@/plugins/auth'
-import axios from './plugins/axios'
+import axios from '@/plugins/axios'
+import alertModal from '@/plugins/alert-modal/index.js'
 
 Vue.config.productionTip = false
 Vue.use(auth)
 Vue.use(axios)
 Vue.use(BootstrapVue)
+Vue.use(alertModal)
 
 /* eslint-disable no-new */
 new Vue({

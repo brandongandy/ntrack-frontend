@@ -1,6 +1,7 @@
 <template>
   <b-container class="col-sm-12 col-lg-6">
     <h2 class="m-3">Welcome back, {{ this.$auth.user.given_name }}!</h2>
+    <b-button @click="showAlert">Show Alert!</b-button>
     <b-row>
       <b-col sm="6" class="mt-2">
         <b-card :title="`${goal.goal_type} Today`">
@@ -60,6 +61,11 @@ export default {
   components: {
     UpdateGoal,
     WorkGoal
+  },
+  methods: {
+    showAlert () {
+      this.$alert.success({ message: 'Help me' })
+    }
   },
   mounted () {
     let user = JSON.parse(localStorage.getItem('user'))
