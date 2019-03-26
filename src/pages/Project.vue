@@ -1,37 +1,6 @@
 <template>
   <b-container class="col-sm-12 col-lg-6">
-    <b-row>
-      <b-col lg="6" class="text-left">
-        <h3>{{ project }}</h3>
-      </b-col>
-      <b-col lg="6" class="text-right">
-        <span>
-          <b-button size="sm" variant="success">Edit</b-button>
-          <b-button size="sm" variant="light">Archive</b-button>
-        </span>
-      </b-col>
-    </b-row>
-
-    <p class="text-muted mt-3">50,000 words before October 1, 2020</p>
-
-    <hr>
-    <b-row>
-      <b-col cols="6" class="text-left">{{counter}} / {{max}}</b-col>
-      <b-col cols="6" class="text-right">45% finished</b-col>
-    </b-row>
-    <b-row>
-      <b-col><b-progress :value="counter" :max="max" /></b-col>
-    </b-row>
-    <b-row class="mt-1 text-right">
-      <b-col>
-        <b-button
-          variant="success"
-          size="sm"
-          v-b-modal.update-goal>
-          Update
-        </b-button>
-      </b-col>
-    </b-row>
+    <project-summary :project="project" :inList="false" />
 
     <b-row class="mt-3 mb-3">
       <b-col class="text-left"><h4>Work History</h4></b-col>
@@ -47,13 +16,17 @@
       </b-col>
     </b-row>
 
-      <b-col><b-button variant="light" size="sm" @click="toggleBusy()">Toggle Busy Table</b-button></b-col>
+    <b-col>
+      <b-button variant="light" size="sm" @click="toggleBusy()">Toggle Busy Table</b-button>
+      <b-button size="sm" variant="light">Archive Project</b-button>
+    </b-col>
     <update-goal ref="updateDialog" :project-id="project" />
   </b-container>
 </template>
 
 <script>
 import UpdateGoal from '../components/UpdateGoal'
+import ProjectSummary from '@/components/ProjectSummary'
 
 export default {
   data () {
@@ -67,16 +40,28 @@ export default {
         { date: '2019-03-03', added: 268, removed: -10, total: 258 },
         { date: '2019-03-04', added: 1765, removed: -243, total: 1522 }
       ],
-      isBusy: true
+      isBusy: true,
+      project: {
+        id: 1,
+        user_id: 'google-oauth2|101551280045388809437',
+        name: '1Q84',
+        project_type: 0,
+        blurb: '',
+        goal_type: 0,
+        start_amount: 8123,
+        goal_amount: 25000,
+        start_date: '2019-01-01',
+        due_date: '2019-02-28',
+        last_update: '2019-03-01',
+        is_finished: false
+      }
     }
   },
   components: {
-    UpdateGoal
+    UpdateGoal,
+    ProjectSummary
   },
   computed: {
-    project () {
-      return this.$route.params.id
-    }
   },
   methods: {
     onSubmit (e) {
