@@ -31,8 +31,6 @@ import ProjectSummary from '@/components/ProjectSummary'
 export default {
   data () {
     return {
-      counter: 22500,
-      max: 50000,
       entries:
       [
         { date: '2019-03-01', added: 234, removed: 0, total: 234 },
@@ -41,20 +39,7 @@ export default {
         { date: '2019-03-04', added: 1765, removed: -243, total: 1522 }
       ],
       isBusy: true,
-      project: {
-        id: 1,
-        user_id: 'google-oauth2|101551280045388809437',
-        name: '1Q84',
-        project_type: 0,
-        blurb: '',
-        goal_type: 0,
-        start_amount: 8123,
-        goal_amount: 25000,
-        start_date: '2019-01-01',
-        due_date: '2019-02-28',
-        last_update: '2019-03-01',
-        is_finished: false
-      }
+      project: {}
     }
   },
   components: {
@@ -73,6 +58,17 @@ export default {
     toggleBusy () {
       this.isBusy = !this.isBusy
     }
+  },
+  created () {
+    let projectId = this.$route.params.id
+    this.$axios.get('/projects?id=' + projectId).then(
+      res => {
+        this.project = res.data
+      },
+      err => {
+        this.$alert.warning({ message: err })
+      }
+    )
   }
 }
 </script>
