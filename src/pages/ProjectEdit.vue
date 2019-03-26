@@ -57,11 +57,11 @@
             label-for="project-goal-type-input">
             <b-form-select
               id="project-goal-type-input"
-              v-model="newProjectForm.goalType"
+              v-model="newProjectForm.goalTypeId"
               required
               :options="projectTypes" disabled>
               <template slot="first">
-                <option :value="null" disabled>Word Count</option>
+                <option :value="1" disabled>Word Count</option>
               </template>
             </b-form-select>
           </b-form-group>
@@ -77,6 +77,25 @@
               required
               placeholder="Project Goal">
             </b-form-input>
+          </b-form-group>
+
+          <b-form-checkbox
+            id="project-started-check"
+            v-model="newProjectForm.started"
+            :value="true"
+            :unchecked-value="false">
+            Already Started?
+          </b-form-checkbox>
+
+          <b-form-group
+            id="project-started-amount"
+            label="Amount Written:"
+            label-for="project-started-amount-input">
+            <b-form-input
+              id="project-started-amount-input"
+              type="number"
+              v-model="newProjectForm.startAmount"
+              :disabled="!newProjectForm.started" />
           </b-form-group>
 
           <b-form-group
@@ -106,15 +125,17 @@ export default {
     return {
       title: '',
       projectTypes: [
-        { value: 'novel', text: 'Novel' },
-        { value: 'article', text: 'Article / Essay' },
-        { value: 'short', text: 'Short Story / Other' }
+        { value: 1, text: 'Novel' },
+        { value: 2, text: 'Short Story / Other' },
+        { value: 3, text: 'Article / Essay' }
       ],
       newProjectForm: {
         name: '',
         type: null,
         blurb: '',
-        goalType: null,
+        started: false,
+        startAmount: 0,
+        goalTypeId: 1,
         goalAmount: 0,
         dueDate: ''
       }
@@ -124,19 +145,23 @@ export default {
     onSubmit (e) {
       e.preventDefault()
 
+      let dueDate = new Date(this.newProjectForm.dueDate)
+
       let project = {
         'user_id': this.userId,
         'name': this.newProjectForm.name,
-        'type': this.newProjectForm.type,
+        'project_type_id': this.newProjectForm.type,
         'blurb': this.newProjectForm.blurb,
-        'goal_type': this.newProjectForm.goalType,
+        'goal_type_id': this.newProjectForm.goalTypeId,
         'goal_amount': this.newProjectForm.goalAmount,
-        'due_date': this.newProjectForm.dueDate
+        'start_amount': this.newProjectForm.startAmount,
+        'start_date': new Date().toISOString(),
+        'due_date': dueDate,
+        'last_update': new Date().toISOString(),
+        'is_finished': false
       }
 
       this.postProject(project)
-
-      this.$router.push('/projects')
     },
     onReset (e) {
       e.preventDefault()
@@ -144,9 +169,10 @@ export default {
     },
     postProject (payload) {
       console.log(payload)
-      this.$axios.post('/projects', payload).then(
+      this.$axios.put('/projects', payload).then(
         res => {
           console.log('ok!')
+          this.$router.push('/projects')
         },
         err => {
           console.log(err)
