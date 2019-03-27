@@ -47,6 +47,9 @@ export default {
     ProjectSummary
   },
   computed: {
+    projectId () {
+      return this.$route.params.id
+    }
   },
   methods: {
     onSubmit (e) {
@@ -60,10 +63,19 @@ export default {
     }
   },
   created () {
-    let projectId = this.$route.params.id
-    this.$axios.get('/projects/' + projectId).then(
+    this.$axios.get('/projects/' + this.projectId).then(
       res => {
         this.project = res.data
+      },
+      err => {
+        this.$alert.warning({ message: err })
+      }
+    )
+
+    this.$axios.get('/projects/' + this.projectId + '/entries').then(
+      res => {
+        this.entries = res.data
+        this.isBusy = false
       },
       err => {
         this.$alert.warning({ message: err })
