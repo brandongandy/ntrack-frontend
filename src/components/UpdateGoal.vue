@@ -83,7 +83,6 @@ export default {
       if (this.project) {
         return `Adding Words to ${this.project.name}`
       } else {
-        console.log('wtf')
         return 'Add Words'
       }
     }
@@ -91,13 +90,15 @@ export default {
   methods: {
     onSubmit (e) {
       e.preventDefault()
-      let payload = [{
+
+      let payload = {
         'user_id': this.$auth.userId,
         'project_id': this.projectId,
         'amount': this.amount,
         'add_type': this.addType,
         'work_date': new Date().toISOString()
-      }]
+      }
+
       this.postWork(payload)
     },
     onReset (e) {
@@ -124,16 +125,16 @@ export default {
           }
         )
       } else {
-        console.log(this.project)
       }
     },
     postWork (payload) {
-      this.$axios.post('/entries').then(
+      this.$axios.put('/entries', payload).then(
         res => {
-
+          this.$alert.success({ message: 'Entry successfully posted!' })
         },
         err => {
           console.log(err)
+          this.$alert.warning({ message: err })
         }
       )
     }
