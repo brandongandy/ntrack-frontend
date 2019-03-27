@@ -72,7 +72,7 @@ export default {
         }
       )
 
-    this.$axios.get('/projects?latest=true').then(
+    this.$axios.get('/projects/latest').then(
       res => {
         this.latestProject = res.data
       },
