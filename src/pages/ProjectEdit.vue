@@ -51,7 +51,7 @@
             </b-form-textarea>
           </b-form-group>
 
-          <b-form-group
+          <!-- <b-form-group
             id="project-goal-type"
             label="Goal Type:"
             label-for="project-goal-type-input">
@@ -64,11 +64,11 @@
                 <option :value="1" disabled>Word Count</option>
               </template>
             </b-form-select>
-          </b-form-group>
+          </b-form-group> -->
 
           <b-form-group
             id="project-goal"
-            label="Goal Amount:"
+            label="Word Count Goal:"
             label-for="project-goal-input">
             <b-form-input
               id="project-goal-input"
@@ -83,7 +83,8 @@
             id="project-started-check"
             v-model="newProjectForm.started"
             :value="true"
-            :unchecked-value="false">
+            :unchecked-value="false"
+            class="mb-2">
             Already Started?
           </b-form-checkbox>
 
@@ -135,7 +136,7 @@ export default {
         blurb: '',
         started: false,
         startAmount: 0,
-        goalTypeId: 1,
+        // goalTypeId: 1,
         goalAmount: 0,
         dueDate: ''
       }
@@ -152,7 +153,7 @@ export default {
         'name': this.newProjectForm.name,
         'project_type_id': this.newProjectForm.type,
         'blurb': this.newProjectForm.blurb,
-        'goal_type_id': this.newProjectForm.goalTypeId,
+        'goal_type_id': 1,
         'goal_amount': this.newProjectForm.goalAmount,
         'start_amount': this.newProjectForm.startAmount,
         'start_date': new Date().toISOString(),
