@@ -125,12 +125,14 @@ export default {
           }
         )
       } else {
+        this.projectId = this.project.id
       }
     },
     postWork (payload) {
       this.$axios.put('/entries', payload).then(
         res => {
           this.$alert.success({ message: 'Entry successfully posted!' })
+          this.$refs.modal.hide()
         },
         err => {
           console.log(err)
