@@ -169,14 +169,13 @@ export default {
       this.$router.go(-1)
     },
     postProject (payload) {
-      console.log(payload)
       this.$axios.put('/projects', payload).then(
         res => {
-          console.log('ok!')
+          this.$alert.success({ message: 'Project added!' })
           this.$router.push('/projects')
         },
         err => {
-          console.log(err)
+          this.$alert.warning({ message: err })
         }
       )
     }
