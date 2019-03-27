@@ -8,6 +8,7 @@
     @shown="onShow">
     <b-form @submit="onSubmit" @reset="onReset" class="w200">
       <b-form-group
+        v-if="!project"
         id="project-goal-type"
         label="Project:"
         label-for="project-select">
@@ -62,15 +63,29 @@
 
 <script>
 export default {
-  props: ['project'],
+  props: {
+    project: {
+      required: false,
+      type: Object
+    }
+  },
   data () {
     return {
-      title: 'Add Words',
       amount: 0,
       addType: 0,
       canChangeProject: false,
-      projectId: this.projectId,
+      projectId: undefined,
       projectList: []
+    }
+  },
+  computed: {
+    title () {
+      if (this.project) {
+        return `Adding Words to ${this.project.name}`
+      } else {
+        console.log('wtf')
+        return 'Add Words'
+      }
     }
   },
   methods: {
@@ -89,7 +104,7 @@ export default {
       e.preventDefault()
     },
     onShow () {
-      if (!this.projectId) {
+      if (!this.project) {
         this.$axios.get('/projects/all').then(
           res => {
             let projects = res.data
@@ -109,7 +124,7 @@ export default {
           }
         )
       } else {
-        this.canChangeProject = false
+        console.log(this.project)
       }
     },
     postWork (payload) {
