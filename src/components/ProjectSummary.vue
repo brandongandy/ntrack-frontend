@@ -15,7 +15,7 @@
     <hr v-if="!inList">
     <b-row>
       <b-col cols="6" class="text-left">{{ project.start_amount }} / {{ project.goal_amount }}</b-col>
-      <b-col cols="6" class="text-right">45% finished</b-col>
+      <b-col cols="6" class="text-right">{{ this.percentFinished }}% finished</b-col>
     </b-row>
     <b-row>
       <b-col>
@@ -44,6 +44,12 @@ export default {
   },
   data () {
     return {}
+  },
+  computed: {
+    percentFinished () {
+      let percent = this.project.start_amount / this.project.goal_amount * 100.00
+      return percent.toFixed(0)
+    }
   }
 }
 </script>
