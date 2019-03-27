@@ -61,7 +61,7 @@ export default {
   },
   created () {
     let projectId = this.$route.params.id
-    this.$axios.get('/projects?id=' + projectId).then(
+    this.$axios.get('/projects/' + projectId).then(
       res => {
         this.project = res.data
       },
