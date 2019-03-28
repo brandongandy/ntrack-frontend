@@ -1,3 +1,5 @@
+import Index from '@/pages/Index'
+
 const routes = [
   {
     path: '/',
@@ -6,7 +8,7 @@ const routes = [
       { path: '', redirect: 'index' },
       {
         path: '/index',
-        component: () => import('../pages/Index.vue')
+        component: Index
       },
       {
         path: '/projects',
