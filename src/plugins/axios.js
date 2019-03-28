@@ -9,9 +9,7 @@ const http = axios.create({
 http.interceptors.request.use(
   function (config) {
     const token = getBearerToken()
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`
-    }
+    config.headers.Authorization = `Bearer ${token}`
     return config
   },
   function (error) {
