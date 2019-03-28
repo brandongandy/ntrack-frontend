@@ -14,12 +14,12 @@
     <p class="text-muted mt-3" v-if="!inList">{{ project.goal_amount }} words before {{ project.due_date }}</p>
     <hr v-if="!inList">
     <b-row>
-      <b-col cols="6" class="text-left">{{ project.start_amount }} / {{ project.goal_amount }}</b-col>
+      <b-col cols="6" class="text-left">{{ project.word_count }} / {{ project.goal_amount }}</b-col>
       <b-col cols="6" class="text-right">{{ this.percentFinished }}% finished</b-col>
     </b-row>
     <b-row>
       <b-col>
-        <b-progress :value="project.start_amount" :max="project.goal_amount" />
+        <b-progress :value="project.word_count" :max="project.goal_amount" />
       </b-col>
     </b-row>
     <b-row class="mt-1 text-right">
