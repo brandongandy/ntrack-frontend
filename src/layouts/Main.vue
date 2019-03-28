@@ -10,7 +10,13 @@
         </b-navbar-nav>
 
         <b-navbar-nav class="ml-auto">
-          <b-button @click="logout" variant="primary">Logout</b-button>
+          <b-dropdown text="Account" right variant="primary" size="sm">
+            <template slot="button-content">
+              <img :src="profileUrl"  />
+            </template>
+            <b-dropdown-item href="/account">My Account</b-dropdown-item>
+            <b-dropdown-item>Logout</b-dropdown-item>
+          </b-dropdown>
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
@@ -27,6 +33,11 @@ export default {
   data () {
     return {}
   },
+  computed: {
+    profileUrl () {
+      return this.$auth.user.picture
+    }
+  },
   methods: {
     logout () {
       this.$auth.logout()
@@ -35,8 +46,14 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 #mt-6 {
   margin-top: 75px;
+}
+
+img {
+  height: 30px;
+  width: 30px;
+  border-radius: 15px;
 }
 </style>

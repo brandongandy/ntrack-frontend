@@ -25,6 +25,10 @@ const routes = [
       {
         path: '/project/:id',
         component: () => import('../pages/Project.vue')
+      },
+      {
+        path: '/account',
+        component: () => import('@/pages/Account.vue')
       }
     ]
   },

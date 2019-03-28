@@ -3,7 +3,7 @@
     <h2 class="m-3">Welcome back, {{ this.$auth.user.given_name }}!</h2>
     <b-row>
       <b-col sm="6" class="mt-2">
-        <b-card :title="`${goal.goal_type} Today`">
+        <b-card title="Word Count Today">
           <b-card-text><h2>0</h2></b-card-text>
           <b-card-text><span class="text-muted">Goal: </span>{{ this.goal.goal_amount }}</b-card-text>
           <b-button variant="primary" size="sm" v-b-modal.update-goal>Add Words</b-button>
