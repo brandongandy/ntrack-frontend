@@ -31,16 +31,6 @@
         <hr />
       </b-col>
     </b-row>
-
-    <b-row align-h="end">
-      <b-col cols="3">
-        <b-button
-          variant="light"
-          class="ml-auto"
-          size="sm">View Archived or Finished Projects
-        </b-button>
-      </b-col>
-    </b-row>
   </b-container>
 </template>
 
