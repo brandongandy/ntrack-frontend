@@ -4,17 +4,24 @@ import Vue from 'vue'
 import BootstrapVue from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import App from '@/App'
 import router from '@/router'
 import auth from '@/plugins/auth'
 import axios from '@/plugins/axios'
 import alertModal from '@/plugins/alert-modal/index.js'
 
+library.add(faQuestionCircle)
+
 Vue.config.productionTip = false
 Vue.use(auth)
 Vue.use(axios)
 Vue.use(BootstrapVue)
 Vue.use(alertModal)
+
+Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 /* eslint-disable no-new */
 new Vue({
