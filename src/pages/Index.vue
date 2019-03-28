@@ -14,7 +14,7 @@
         <b-card title="Last Updated Project">
           <b-card-text><h2>{{ latestProject.name }}</h2></b-card-text>
           <b-card-text><span class="text-muted">Type: </span>Novel</b-card-text>
-          <b-button variant="primary" size="sm" to="/project/12">View Details</b-button>
+          <b-button variant="primary" size="sm" :to="`/project/${latestProject.id}`">View Details</b-button>
           <b-button variant="success" size="sm" to="/new-project">Start New Project</b-button>
         </b-card>
       </b-col>
@@ -61,7 +61,7 @@ export default {
     UpdateGoal,
     WorkGoal
   },
-  mounted () {
+  beforeCreate () {
     this.$axios.get('/goals?user_id=' + this.$auth.userId)
       .then(
         res => {
