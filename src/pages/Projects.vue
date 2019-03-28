@@ -31,6 +31,12 @@
         <hr />
       </b-col>
     </b-row>
+
+    <b-row v-if="noProjects" class="text-center">
+      <b-col class="my-3">
+        <h4>No projects yet. Start one up!</h4>
+      </b-col>
+    </b-row>
   </b-container>
 </template>
 
@@ -42,36 +48,7 @@ export default {
       loading: true,
       fields: ['name', 'goal_amount', 'due_date', 'view_project'],
       projects: [],
-      fallback: [
-        {
-          id: 1,
-          user_id: 'google-oauth2|101551280045388809437',
-          name: '1Q84',
-          project_type: 0,
-          blurb: '',
-          goal_type: 0,
-          start_amount: 8123,
-          goal_amount: 25000,
-          start_date: '2019-01-01',
-          due_date: '2019-02-28',
-          last_update: '2019-03-01',
-          is_finished: false
-        },
-        {
-          id: 2,
-          user_id: 'google-oauth2|101551280045388809437',
-          name: 'Great Expectations',
-          project_type: 0,
-          blurb: '',
-          goal_type: 0,
-          start_amount: 8123,
-          goal_amount: 25000,
-          start_date: '2019-01-01',
-          due_date: '2019-02-28',
-          last_update: '2019-03-01',
-          is_finished: false
-        }
-      ]
+      noProjects: false
     }
   },
   components: {
@@ -85,7 +62,11 @@ export default {
   mounted () {
     this.$axios.get('/projects/all').then(
       res => {
-        this.projects = res.data
+        if (res.data.length > 0) {
+          this.projects = res.data
+        } else {
+          this.noProjects = true
+        }
         this.loading = false
       },
       err => {
