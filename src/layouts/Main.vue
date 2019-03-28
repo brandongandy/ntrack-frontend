@@ -22,9 +22,6 @@
     </b-navbar>
     <router-view />
     <alert-modal />
-    <b-navbar class="text-muted" variant="light" fixed="bottom">
-      <p class="m-auto">Copyright &copy; 2019 Colonna Softworks</p>
-    </b-navbar>
   </div>
 </template>
 
