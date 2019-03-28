@@ -14,7 +14,7 @@
     <p class="text-muted mt-3" v-if="!inList">{{ project.goal_amount }} words before {{ project.due_date }}</p>
     <hr v-if="!inList">
     <b-row>
-      <b-col cols="6" class="text-left">{{ project.word_count }} / {{ project.goal_amount }}</b-col>
+      <b-col cols="6" class="text-left">{{ project.total_words }} / {{ project.goal_amount }}</b-col>
       <b-col cols="6" class="text-right">{{ this.percentFinished }}% finished</b-col>
     </b-row>
     <b-row>
@@ -49,6 +49,13 @@ export default {
     percentFinished () {
       let percent = this.project.start_amount / this.project.goal_amount * 100.00
       return percent.toFixed(0)
+    },
+    total_words () {
+      if (this.project.word_count) {
+        return this.project.word_count
+      } else {
+        return this.project.start_amount
+      }
     }
   }
 }
