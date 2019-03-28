@@ -1,4 +1,5 @@
 import Index from '@/pages/Index'
+import Account from '@/pages/Account'
 
 const routes = [
   {
@@ -28,7 +29,7 @@ const routes = [
       },
       {
         path: '/account',
-        component: () => import('@/pages/Account.vue')
+        component: Account
       }
     ]
   },
