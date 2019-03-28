@@ -17,10 +17,19 @@
     </b-row>
 
     <b-col>
-      <b-button variant="light" size="sm" @click="toggleBusy()">Toggle Busy Table</b-button>
       <b-button size="sm" variant="light">Archive Project</b-button>
+      <b-button size="sm" variant="light" v-b-modal.deleteModal>Delete Project</b-button>
     </b-col>
     <update-goal ref="updateDialog" :project="project" />
+    <b-modal
+      id="deleteModal"
+      ref="deleteModal"
+      centered
+      title="Do you really want to delete this project?"
+      class="text-left"
+      @ok="deleteProject">
+      <p> This cannot be undone. All word count entries associated with this project will also be deleted.</p>
+    </b-modal>
   </b-container>
 </template>
 
@@ -58,8 +67,16 @@ export default {
     updateGoal () {
       this.$refs.updateDialog.show()
     },
-    toggleBusy () {
-      this.isBusy = !this.isBusy
+    deleteProject () {
+      this.$axios.delete('/projects/' + this.projectId).then(
+        res => {
+          this.$alert.show({ message: `Project ${this.project.name} has been successfully deleted.` })
+          this.$router.push('/projects')
+        },
+        err => {
+          this.$alert.warning({ message: err })
+        }
+      )
     }
   },
   created () {
