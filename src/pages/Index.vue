@@ -4,7 +4,7 @@
     <b-row>
       <b-col sm="6" class="mt-2">
         <b-card title="Word Count Today">
-          <b-card-text><h2>0</h2></b-card-text>
+          <b-card-text><h3>{{ this.goal.words_today }}</h3></b-card-text>
           <b-card-text><span class="text-muted">Goal: </span>{{ this.goal.goal_amount }}</b-card-text>
           <b-button variant="primary" size="sm" v-b-modal.update-goal>Add Words</b-button>
           <b-button variant="info" size="sm" v-b-modal.work-goal>Change Goal</b-button>
@@ -12,9 +12,12 @@
       </b-col>
       <b-col sm="6" class="mt-2">
         <b-card title="Last Updated Project">
-          <b-card-text><h2>{{ latestProject.name }}</h2></b-card-text>
-          <b-card-text><span class="text-muted">Type: </span>Novel</b-card-text>
-          <b-button variant="primary" size="sm" :to="`/project/${latestProject.id}`">View Details</b-button>
+          <b-card-text><h3>{{ latestProject.name }}</h3></b-card-text>
+          <b-card-text v-if="latestProject.project_type_id"><span class="text-muted">Type: </span>Novel</b-card-text>
+          <b-button variant="primary" size="sm" :to="`/project/${latestProject.id}`"
+            v-if="latestProject.id">
+            View Details
+          </b-button>
           <b-button variant="success" size="sm" to="/new-project">Start New Project</b-button>
         </b-card>
       </b-col>
@@ -28,7 +31,7 @@
       </b-col> -->
     </b-row>
     <update-goal />
-    <work-goal :goal.sync="goalObj" />
+    <work-goal :goal.sync="goal" />
   </b-container>
 </template>
 
@@ -40,20 +43,13 @@ export default {
   data () {
     return {
       msg: this.$auth.user.name,
-      goal: {},
+      goal: {
+        words_today: 0,
+        goal_amount: 0
+      },
       latestProject: {
         id: null,
         name: 'No projects yet!'
-      }
-    }
-  },
-  computed: {
-    goalObj: {
-      get: function () {
-        return this.goal
-      },
-      set: function (val) {
-        this.goal = val
       }
     }
   },
@@ -65,7 +61,7 @@ export default {
     this.$axios.get('/goals?user_id=' + this.$auth.userId)
       .then(
         res => {
-          this.goalObj = Object.assign({}, res.data[0])
+          this.goal = res.data
         },
         err => {
           this.$alert.danger({ message: err })
