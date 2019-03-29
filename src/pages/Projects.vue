@@ -46,7 +46,6 @@ export default {
   data () {
     return {
       loading: true,
-      fields: ['name', 'goal_amount', 'due_date', 'view_project'],
       projects: [],
       noProjects: false
     }
@@ -70,8 +69,8 @@ export default {
         this.loading = false
       },
       err => {
+        this.noProjects = true
         this.$alert.danger({ message: err })
-        this.projects = this.fallback
         this.loading = false
       }
     )
