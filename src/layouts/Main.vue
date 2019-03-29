@@ -12,9 +12,9 @@
         <b-navbar-nav class="ml-auto">
           <b-dropdown text="Account" right variant="primary" size="sm">
             <template slot="button-content">
-              <img :src="profileUrl"  />
+              <font-awesome-icon icon="user-circle"></font-awesome-icon> My Account
             </template>
-            <b-dropdown-item href="/account">My Account</b-dropdown-item>
+            <b-dropdown-item to="/account">My Account</b-dropdown-item>
             <b-dropdown-item>Logout</b-dropdown-item>
           </b-dropdown>
         </b-navbar-nav>
