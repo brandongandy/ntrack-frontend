@@ -21,6 +21,9 @@
           <b-button variant="success" size="sm" to="/new-project">Start New Project</b-button>
         </b-card>
       </b-col>
+      <b-col sm="12" class="mt-2">
+        <work-calendar />
+      </b-col>
       <!-- <b-col sm="6" class="mt-2">
         <b-card title="Latest Query">
           <b-card-text><h2>Agent pitch</h2></b-card-text>
@@ -38,6 +41,7 @@
 <script>
 import UpdateGoal from '../components/UpdateGoal'
 import WorkGoal from '../components/WorkGoal'
+import WorkCalendar from '@/components/WorkCalendar'
 
 export default {
   data () {
@@ -55,7 +59,8 @@ export default {
   },
   components: {
     UpdateGoal,
-    WorkGoal
+    WorkGoal,
+    WorkCalendar
   },
   beforeCreate () {
     this.$axios.get('/goals?user_id=' + this.$auth.userId)
