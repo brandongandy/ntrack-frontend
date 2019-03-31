@@ -63,10 +63,12 @@ export default {
     WorkCalendar
   },
   beforeCreate () {
-    this.$axios.get('/goals?user_id=' + this.$auth.userId)
+    this.$axios.get('/goals')
       .then(
         res => {
-          this.goal = res.data
+          if (res.data.amount > 0) {
+            this.goal = res.data
+          }
         },
         err => {
           this.$alert.danger({ message: err })

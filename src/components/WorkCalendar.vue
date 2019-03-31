@@ -1,7 +1,7 @@
 <template>
-  <b-card :title="`Work History: ${this.dayTitle()}`">
+  <b-card :title="`Writing Streak: ${this.dayTitle()}`">
 
-    <table class="table table-bordered">
+    <table class="table table-bordered" fixed>
       <thead>
         <tr>
           <th v-for="day in weekdays" :key="day.index">{{ day.day }}</th>
