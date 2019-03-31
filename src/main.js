@@ -7,6 +7,7 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faQuestionCircle, faUserCircle } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { format } from 'date-fns'
 import App from '@/App'
 import router from '@/router'
 import auth from '@/plugins/auth'
@@ -19,6 +20,7 @@ Vue.config.productionTip = false
 Vue.use(auth)
 Vue.use(axios)
 Vue.use(BootstrapVue)
+Vue.use(format)
 Vue.use(alertModal)
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
