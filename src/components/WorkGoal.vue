@@ -7,7 +7,7 @@
     class="text-left"
     @shown="onShown">
     <b-form @submit="onSubmit" @reset="onReset" class="w200">
-      <b-form-group
+      <!-- <b-form-group
         id="goal-type"
         label="Goal Type:"
         label-for="goal-type-select">
@@ -19,7 +19,7 @@
             <option :value="0">{{ this.newGoal.goal_type }}</option>
           </template>
         </b-form-select>
-      </b-form-group>
+      </b-form-group> -->
 
       <b-form-group
         id="update-amount"
@@ -50,7 +50,7 @@ export default {
   props: ['goal'],
   data () {
     return {
-      title: 'Set Daily Work Goal',
+      title: 'Set New Work Goal',
       goalTypeId: 0,
       addType: 0,
       newGoal: {}
