@@ -34,7 +34,7 @@
       </b-col> -->
     </b-row>
     <update-goal />
-    <work-goal :goal.sync="goal" />
+    <work-goal :goal.sync="goal" v-on:update:amount="goal.goal_amount = $event" />
   </b-container>
 </template>
 

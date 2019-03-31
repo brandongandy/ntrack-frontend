@@ -29,7 +29,7 @@
           id="update-amount-input"
           ref="amount"
           type="number"
-          v-model="newGoal.goal_amount"
+          v-model="goalAmount"
           required
           placeholder="Project Goal">
         </b-form-input>
@@ -51,9 +51,9 @@ export default {
   data () {
     return {
       title: 'Set New Work Goal',
-      goalTypeId: 0,
       addType: 0,
-      newGoal: {}
+      newGoal: {},
+      goalAmount: 0
     }
   },
   methods: {
@@ -63,25 +63,18 @@ export default {
     onSubmit (e) {
       e.preventDefault()
 
-      let payload = {
-        'user_id': this.$auth.userId,
-        'goal_type': this.newGoal.goal_type,
-        'goal_amount': this.newGoal.goal_amount
-      }
-
-      this.postGoal(payload)
+      this.postGoal(this.goalAmount)
     },
     onReset (e) {
       e.preventDefault()
       console.log(this.newGoal.goal_amount)
       this.closeModal(false)
     },
-    postGoal (payload) {
-      let userId = this.$auth.userId
-      this.$axios.post('/goals?user_id=' + userId, payload).then(
+    postGoal (newAmount) {
+      this.$axios.post('/goals/' + newAmount).then(
         res => {
           if (res.status >= 200 && res.status < 300) {
-            this.newGoal = Object.assign({}, res.data)
+            this.newGoal = res.data
             this.closeModal(true)
           }
         },
@@ -92,7 +85,7 @@ export default {
     },
     closeModal (success) {
       if (success) {
-        this.$emit('update:goal', this.newGoal)
+        this.$emit('update:amount', this.newGoal.amount)
       }
       this.$refs.modal.hide()
     }
