@@ -31,8 +31,7 @@ export default {
         { 'day': 'Thu' },
         { 'day': 'Fri' },
         { 'day': 'Sat' }
-      ],
-      weekCount: (31 + 5 + 6) / 7
+      ]
     }
   },
   computed: {
@@ -86,9 +85,12 @@ export default {
     },
     styleDate (date) {
       if (isThisMonth(date)) {
+        if (date < new Date('2019-03-12')) {
+          return 'table-primary'
+        }
         return 'table-light'
       } else {
-        return 'table-secondary'
+        return 'table-secondary text-muted'
       }
     }
   }
