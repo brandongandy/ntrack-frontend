@@ -42,6 +42,7 @@
 import UpdateGoal from '../components/UpdateGoal'
 import WorkGoal from '../components/WorkGoal'
 import WorkCalendar from '@/components/WorkCalendar'
+import { format } from 'date-fns'
 
 export default {
   data () {
@@ -63,12 +64,11 @@ export default {
     WorkCalendar
   },
   beforeCreate () {
-    this.$axios.get('/goals')
+    let todayDate = format(new Date(), 'YYYY-MM-DD')
+    this.$axios.get('/goals/' + todayDate)
       .then(
         res => {
-          if (res.data.amount > 0) {
-            this.goal = res.data
-          }
+          this.goal = res.data
         },
         err => {
           this.$alert.danger({ message: err })
