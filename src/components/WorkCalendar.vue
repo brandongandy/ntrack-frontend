@@ -1,7 +1,7 @@
 <template>
   <b-card :title="`Writing Streak: ${this.dayTitle()}`">
 
-    <table class="table table-bordered" fixed>
+    <table class="table table-bordered" fixed v-if="!loading">
       <thead>
         <tr>
           <th v-for="day in weekdays" :key="day.index">{{ day.day }}</th>
@@ -17,7 +17,8 @@
 </template>
 
 <script>
-import { format, getDay, eachDay, startOfMonth, endOfMonth, subDays, addDays, isThisMonth } from 'date-fns'
+import { format, getDay, eachDay, startOfMonth,
+  endOfMonth, subDays, addDays, isThisMonth, isWithinRange } from 'date-fns'
 export default {
   data () {
     return {
@@ -31,7 +32,8 @@ export default {
         { 'day': 'Thu' },
         { 'day': 'Fri' },
         { 'day': 'Sat' }
-      ]
+      ],
+      activeDays: []
     }
   },
   computed: {
@@ -85,14 +87,29 @@ export default {
     },
     styleDate (date) {
       if (isThisMonth(date)) {
-        if (date < new Date('2019-03-12')) {
+        if (isWithinRange(new Date(date),
+          new Date(this.activeDays[0].work_date),
+          addDays(new Date(this.activeDays[this.activeDays.length - 1].work_date), 1))) {
           return 'table-primary'
+        } else {
+          return 'table-light'
         }
-        return 'table-light'
       } else {
         return 'table-secondary text-muted'
       }
     }
+  },
+  mounted () {
+    let fromDate = format(new Date(this.days[0]), 'YYYY-MM-DD')
+    this.$axios.get('/entries/all?from=' + fromDate).then(
+      res => {
+        this.activeDays = res.data
+        this.loading = false
+      },
+      err => {
+        console.log(err)
+      }
+    )
   }
 }
 </script>
