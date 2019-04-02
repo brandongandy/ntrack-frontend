@@ -71,7 +71,7 @@ export default {
       this.closeModal(false)
     },
     postGoal (newAmount) {
-      this.$axios.post('/goals/' + newAmount).then(
+      this.$axios.put('/goals/' + newAmount).then(
         res => {
           if (res.status >= 200 && res.status < 300) {
             this.newGoal = res.data
