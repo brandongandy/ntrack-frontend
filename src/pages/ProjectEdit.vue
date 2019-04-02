@@ -16,7 +16,7 @@
             <b-form-input
               id="project-name-input"
               type="text"
-              v-model="newProjectForm.name"
+              v-model="project.name"
               required
               placeholder="Enter project name">
             </b-form-input>
@@ -28,7 +28,7 @@
             label-for="project-type-select">
             <b-form-select
               id="project-type-select"
-              v-model="newProjectForm.type"
+              v-model="project.type"
               required
               :options="projectTypes">
               <template slot="first">
@@ -44,7 +44,7 @@
             <b-form-textarea
               id="project-blurb-input"
               type="text"
-              v-model="newProjectForm.blurb"
+              v-model="project.blurb"
               placeholder="Write down the premise of your project or a short blurb about it. (Optional)"
               rows="2"
               max-rows="3">
@@ -57,7 +57,7 @@
             label-for="project-goal-type-input">
             <b-form-select
               id="project-goal-type-input"
-              v-model="newProjectForm.goalTypeId"
+              v-model="project.goalTypeId"
               required
               :options="projectTypes" disabled>
               <template slot="first">
@@ -73,7 +73,7 @@
             <b-form-input
               id="project-goal-input"
               type="number"
-              v-model="newProjectForm.goalAmount"
+              v-model="project.goalAmount"
               required
               placeholder="Project Goal">
             </b-form-input>
@@ -81,7 +81,7 @@
 
           <b-form-checkbox
             id="project-started-check"
-            v-model="newProjectForm.started"
+            v-model="project.started"
             :value="true"
             :unchecked-value="false"
             class="mb-2">
@@ -95,8 +95,8 @@
             <b-form-input
               id="project-started-amount-input"
               type="number"
-              v-model="newProjectForm.startAmount"
-              :disabled="!newProjectForm.started" />
+              v-model="project.startAmount"
+              :disabled="!project.started" />
           </b-form-group>
 
           <b-form-group
@@ -106,7 +106,7 @@
             <b-form-input
               id="project-due-date-input"
               type="date"
-              v-model="newProjectForm.dueDate"
+              v-model="project.dueDate"
               required
               placeholder="Due Date">
             </b-form-input>
@@ -130,15 +130,18 @@ export default {
         { value: 2, text: 'Short Story / Other' },
         { value: 3, text: 'Article / Essay' }
       ],
-      newProjectForm: {
+      project: {
+        id: null,
         name: '',
-        type: null,
+        type: 1,
         blurb: '',
+        goalTypeId: 1,
+        goalAmount: 0,
         started: false,
         startAmount: 0,
-        // goalTypeId: 1,
-        goalAmount: 0,
-        dueDate: ''
+        startDate: new Date().toISOString(),
+        dueDate: new Date().toISOString(),
+        lastUpdate: new Date().toISOString()
       }
     }
   },
@@ -146,19 +149,17 @@ export default {
     onSubmit (e) {
       e.preventDefault()
 
-      let dueDate = new Date(this.newProjectForm.dueDate)
-
       let project = {
-        'user_id': this.userId,
-        'name': this.newProjectForm.name,
-        'project_type_id': this.newProjectForm.type,
-        'blurb': this.newProjectForm.blurb,
-        'goal_type_id': 1,
-        'goal_amount': this.newProjectForm.goalAmount,
-        'start_amount': this.newProjectForm.startAmount,
-        'start_date': new Date().toISOString(),
-        'due_date': dueDate,
-        'last_update': new Date().toISOString(),
+        'user_id': this.$auth.userId,
+        'name': this.project.name,
+        'project_type_id': this.project.type,
+        'blurb': this.project.blurb,
+        'goal_type_id': this.project.goalTypeId,
+        'goal_amount': this.project.goalAmount,
+        'start_amount': this.project.startAmount,
+        'start_date': this.project.startDate,
+        'due_date': this.project.dueDate,
+        'last_update': this.project.lastUpdate,
         'is_finished': false
       }
 
@@ -169,7 +170,18 @@ export default {
       this.$router.go(-1)
     },
     postProject (payload) {
-      this.$axios.put('/projects', payload).then(
+      if (this.projectId) {
+        payload.push({ 'id': this.projectId })
+        this.$axios.put('/projects/' + payload.id, payload).then(
+          res => {
+            // do
+          },
+          err => {
+            this.$alert.warning({ message: err })
+          }
+        )
+      }
+      this.$axios.post('/projects', payload).then(
         res => {
           this.$alert.success({ message: 'Project added!' })
           this.$router.push('/projects')
@@ -181,15 +193,22 @@ export default {
     }
   },
   computed: {
-    userId: {
-      get: function () {
-        return JSON.parse(localStorage.getItem('user')).sub
-      }
+    projectId () {
+      return this.$route.params.id
     }
   },
   created () {
-    if (this.$route.params.id) {
+    if (this.projectId) {
       this.title = 'Editing project: '
+      this.$axios.get('/projects/' + this.projectId).then(
+        res => {
+          this.project = res.data
+          this.title += `${this.project.name}`
+        },
+        err => {
+          this.$alert.warning({ message: err })
+        }
+      )
     } else {
       this.title = 'Start New Project'
     }
