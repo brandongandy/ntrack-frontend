@@ -1,5 +1,5 @@
 import Index from '@/pages/Index'
-import Account from '@/pages/Account'
+// import Account from '@/pages/Account'
 
 const routes = [
   {
@@ -13,23 +13,11 @@ const routes = [
       },
       {
         path: '/projects',
-        component: () => import('../pages/Projects.vue')
-      },
-      {
-        path: '/new-project',
-        component: () => import('../pages/ProjectEdit.vue')
-      },
-      {
-        path: '/edit-project/:id',
-        component: () => import('../pages/ProjectEdit.vue')
+        component: () => import('@/pages/Projects.vue')
       },
       {
         path: '/project/:id',
-        component: () => import('../pages/Project.vue')
-      },
-      {
-        path: '/account',
-        component: Account
+        component: () => import('@/pages/Project.vue')
       }
     ]
   },

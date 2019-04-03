@@ -1,5 +1,47 @@
 <template>
-  <div>
+  <v-sheet class="pa-3 elevation-1">
+    <v-layout row>
+      <v-flex grow>
+        <h2>{{ project.name }}</h2>
+      </v-flex>
+      <v-flex shrink>
+        <v-tooltip top>
+          <template v-slot:activator="{ on }">
+            <v-btn
+              small icon
+              color="success" v-if="inList"
+              v-on="on"
+              @click="$router.push('project/' + project.id)">
+              <v-icon>arrow_forward</v-icon>
+            </v-btn>
+          </template>
+          <span>View Project</span>
+        </v-tooltip>
+        <v-tooltip top>
+          <template v-slot:activator="{ on }">
+            <v-btn
+              small icon
+              color="success" v-if="!inList"
+              v-on="on"
+              @click="$router.push('edit-project/' + project.id)"><v-icon>edit</v-icon></v-btn>
+          </template>
+          <span>Edit Project</span>
+        </v-tooltip>
+      </v-flex>
+    </v-layout>
+    <p v-if="!inList">{{ project.goal_amount }} words before {{ project.due_date }}</p>
+    <hr v-if="!inList" />
+    <v-layout row>
+      <v-flex>
+        {{ project.word_count }} / {{ project.goal_amount }}
+      </v-flex>
+      <v-flex shrink>
+        {{ this.percentFinished }}% finished
+      </v-flex>
+    </v-layout>
+      <v-progress-linear v-model="percentFinished"></v-progress-linear>
+  </v-sheet>
+  <!-- <div>
     <b-row>
       <b-col lg="6" class="text-left">
         <h3>{{ project.name }}</h3>
@@ -33,7 +75,7 @@
         </b-button>
       </b-col>
     </b-row>
-  </div>
+  </div> -->
 </template>
 
 <script>
