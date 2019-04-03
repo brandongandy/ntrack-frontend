@@ -25,11 +25,23 @@
         <v-card>
           <v-card-title primary-title><h3 class="headline">Recent Work History</h3></v-card-title>
           <v-calendar class="pa-3"
+            ref="calendar"
             v-model="calendarStart"
             :type="calendarType"
             :end="calendarEnd"
             color="primary">
           </v-calendar>
+          <v-card-actions>
+            <v-btn flat icon color="primary"
+              @click="$refs.calendar.prev()">
+              <v-icon>arrow_back</v-icon>
+            </v-btn>
+            <v-spacer></v-spacer>
+            <v-btn flat icon color="primary"
+              @click="$refs.calendar.next()">
+              <v-icon>arrow_forward</v-icon>
+            </v-btn>
+          </v-card-actions>
         </v-card>
       </v-flex>
     </v-layout>

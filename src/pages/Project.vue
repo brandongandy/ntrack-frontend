@@ -4,10 +4,9 @@
       <v-flex xs12>
         <project-summary :project="project" :inList="false" />
       </v-flex>
-      <v-flex xs12>
-        <h3>Work History</h3>
-      </v-flex>
       <v-flex>
+        <v-card>
+          <v-card-title primary-title><h3>Recent Word Count Activity</h3></v-card-title>
         <v-data-table
           :headers="headers"
           :items="entries"
@@ -24,6 +23,7 @@
             <td>{{ props.item.total }}</td>
           </template>
         </v-data-table>
+        </v-card>
       </v-flex>
     </v-layout>
   </v-container>
