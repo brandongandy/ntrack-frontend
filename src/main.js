@@ -5,7 +5,7 @@ import BootstrapVue from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faQuestionCircle, faUserCircle } from '@fortawesome/free-solid-svg-icons'
+import { faQuestionCircle, faUserCircle, faBars } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { format } from 'date-fns'
 import App from '@/App'
@@ -14,7 +14,7 @@ import auth from '@/plugins/auth'
 import axios from '@/plugins/axios'
 import alertModal from '@/plugins/alert-modal/index.js'
 
-library.add(faQuestionCircle, faUserCircle)
+library.add(faQuestionCircle, faUserCircle, faBars)
 
 Vue.config.productionTip = false
 Vue.use(auth)

@@ -1,6 +1,10 @@
 <template>
-  <b-container class="col-sm-12 col-lg-6">
-    <h2 class="m-3">Welcome back, {{ this.$auth.user.given_name }}!</h2>
+  <b-container class="col-sm-12 col-lg-8">
+    <b-row>
+      <b-col>
+        <h3>Welcome back, {{ this.$auth.user.given_name }}!</h3>
+      </b-col>
+    </b-row>
     <b-row>
       <b-col sm="6" class="mt-2">
         <b-card title="Word Count Today">
