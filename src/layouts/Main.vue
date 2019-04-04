@@ -1,14 +1,18 @@
 <template>
 <div id="app">
   <v-app>
-    <v-navigation-drawer fixed clipped
-      class="grey lighten-4"
-      app v-model="drawer">
+    <v-navigation-drawer fixed
+      class="blue-grey darken-4"
+      app dark
+      v-model="drawer"
+      width="250">
       <v-list>
-        <v-list-tile
+        <v-list-tile class="nav"
           v-for="item in items"
           :key="item.title"
-          :to="item.route">
+          :to="item.route"
+          active-class="hightlighted"
+          :class="item.route === $route.path ? 'highlighted' : ''">
           <v-divider v-if="item.divider"
             class="my-3" dark></v-divider>
           <v-list-tile-action>
@@ -20,7 +24,7 @@
         </v-list-tile>
       </v-list>
     </v-navigation-drawer>
-    <v-toolbar color="primary" dark app absolute clipped-left>
+    <v-toolbar class="blue-grey darken-4" dark fixed flat app>
       <v-toolbar-side-icon @click.native="drawer = !drawer"></v-toolbar-side-icon>
       <span class="title ml-3 mr-5">nTrack&nbsp;<span class="text">v0.2</span></span>
     </v-toolbar>
@@ -67,15 +71,11 @@ export default {
 </script>
 
 <style>
-#keep main .container {
-  height: 660px;
+.nav {
+  border-radius: 5px;
+  margin: 10px 15px;
 }
-
-.navigation-drawer__border {
-  display: none;
-}
-
-.text {
-  font-weight: 400;
+.highlighted {
+  background-color: #43A047;
 }
 </style>
