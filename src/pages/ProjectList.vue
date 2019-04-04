@@ -1,7 +1,9 @@
 <template>
   <v-container grid-list-md>
     <v-layout row wrap>
-      <v-flex xs8><h2>My Active Projects</h2></v-flex>
+      <v-flex xs12>
+        <h2 class="headline">My Active Projects</h2>
+      </v-flex>
       <v-flex xs8><v-btn depressed small icon color="success"><v-icon>add</v-icon></v-btn></v-flex>
     </v-layout>
     <v-layout row wrap>
