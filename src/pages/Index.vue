@@ -46,39 +46,6 @@
       </v-flex>
     </v-layout>
   </v-container>
-  <!-- <b-container class="col-sm-12 col-lg-8">
-    <b-row>
-      <b-col>
-        <h3>Welcome back, {{ this.$auth.user.given_name }}!</h3>
-      </b-col>
-    </b-row>
-    <b-row>
-      <b-col sm="6" class="mt-2">
-        <b-card title="Word Count Today">
-          <b-card-text><h3>{{ this.goal.words_today }}</h3></b-card-text>
-          <b-card-text><span class="text-muted">Goal: </span>{{ this.goal.goal_amount }}</b-card-text>
-          <b-button variant="primary" size="sm" v-b-modal.update-goal>Add Words</b-button>
-          <b-button variant="info" size="sm" v-b-modal.work-goal>Change Goal</b-button>
-        </b-card>
-      </b-col>
-      <b-col sm="6" class="mt-2">
-        <b-card title="Last Updated Project">
-          <b-card-text><h3>{{ latestProject.name }}</h3></b-card-text>
-          <b-card-text v-if="latestProject.project_type_id"><span class="text-muted">Type: </span>Novel</b-card-text>
-          <b-button variant="primary" size="sm" :to="`/project/${latestProject.id}`"
-            v-if="latestProject.id">
-            View Details
-          </b-button>
-          <b-button variant="success" size="sm" to="/new-project">Start New Project</b-button>
-        </b-card>
-      </b-col>
-      <b-col sm="12" class="mt-2">
-        <work-calendar />
-      </b-col>
-    </b-row>
-    <update-goal />
-    <work-goal :goal.sync="goal" v-on:update:amount="goal.goal_amount = $event" />
-  </b-container> -->
 </template>
 
 <script>
@@ -117,7 +84,7 @@ export default {
           this.goal = res.data
         },
         err => {
-          this.$alert.danger({ message: err })
+          console.log(err)
         }
       )
 
@@ -126,7 +93,7 @@ export default {
         this.latestProject = res.data
       },
       err => {
-        this.$alert.danger({ message: err })
+        console.log(err)
       }
     )
   }

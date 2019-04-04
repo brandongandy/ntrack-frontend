@@ -1,7 +1,7 @@
 <template>
-  <b-container>
+  <v-container>
     <h1>Loading...</h1>
-  </b-container>
+  </v-container>
 </template>
 
 <script>

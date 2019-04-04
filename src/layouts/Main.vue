@@ -1,11 +1,24 @@
 <template>
 <div id="app">
   <v-app>
-    <v-navigation-drawer fixed
-      class="blue-grey darken-3"
+    <v-navigation-drawer fixed floating
+      class="blue-grey darken-2"
       app dark
       v-model="drawer"
       width="250">
+      <v-toolbar  class="green darken-1">
+        <v-list class="pa-0">
+          <v-list-tile avatar>
+            <v-list-tile-avatar>
+              <img src="https://randomuser.me/api/portraits/lego/1.jpg" />
+            </v-list-tile-avatar>
+
+            <v-list-tile-content>
+              <v-list-tile-title>{{ this.$auth.user.name }}</v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
+        </v-list>
+      </v-toolbar>
       <v-list>
         <v-list-tile class="nav"
           v-for="item in items"
@@ -13,20 +26,21 @@
           :to="item.route"
           active-class="hightlighted"
           :class="item.route === $route.path ? 'highlighted' : ''">
-          <v-divider v-if="item.divider"
-            class="my-3" dark></v-divider>
           <v-list-tile-action>
             <v-icon>{{ item.icon }}</v-icon>
           </v-list-tile-action>
+          <v-divider v-if="item.divider"></v-divider>
           <v-list-tile-content>
             <v-list-tile-title>{{ item.text }}</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
       </v-list>
     </v-navigation-drawer>
-    <v-toolbar class="blue-grey darken-3" dark fixed app>
+    <v-toolbar class="green darken-1" dark fixed app>
       <v-toolbar-side-icon @click.native="drawer = !drawer"></v-toolbar-side-icon>
       <span class="title ml-3 mr-5">nTrack&nbsp;<span class="text">v0.2</span></span>
+      <v-spacer></v-spacer>
+      <v-btn flat icon><v-icon>power_settings_new</v-icon></v-btn>
     </v-toolbar>
 
     <v-content>
@@ -48,17 +62,9 @@ export default {
       { icon: 'bookmark', text: 'New Project', route: '/project/new' },
       { icon: 'question_answer', text: 'Queries', route: '/' },
       { divider: true },
-      { icon: 'home', text: 'My Account' }
+      { icon: 'account_circle', text: 'My Account', route: '/myaccuont' }
     ]
   }),
-  props: {
-    source: String
-  },
-  computed: {
-    profileUrl () {
-      return this.$auth.user.picture
-    }
-  },
   methods: {
     logout () {
       this.$auth.logout()
@@ -77,5 +83,6 @@ export default {
 }
 .highlighted {
   background-color: #43A047;
+  box-shadow: 0px 0px 4px #37474F;
 }
 </style>
