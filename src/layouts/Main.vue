@@ -2,7 +2,7 @@
 <div id="app">
   <v-app>
     <v-navigation-drawer fixed
-      class="blue-grey darken-4"
+      class="blue-grey darken-3"
       app dark
       v-model="drawer"
       width="250">
@@ -24,7 +24,7 @@
         </v-list-tile>
       </v-list>
     </v-navigation-drawer>
-    <v-toolbar class="blue-grey darken-4" dark fixed flat app>
+    <v-toolbar class="blue-grey darken-3" dark fixed app>
       <v-toolbar-side-icon @click.native="drawer = !drawer"></v-toolbar-side-icon>
       <span class="title ml-3 mr-5">nTrack&nbsp;<span class="text">v0.2</span></span>
     </v-toolbar>

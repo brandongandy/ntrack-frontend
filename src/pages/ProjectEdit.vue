@@ -125,7 +125,7 @@ export default {
     postProject (payload) {
       if (this.projectId) {
         payload.push({ 'id': this.projectId })
-        this.$axios.put('/projects/' + payload.id, payload).then(
+        this.$axios.post('/projects/' + payload.id, payload).then(
           res => {
             // do
           },
@@ -134,13 +134,13 @@ export default {
           }
         )
       }
-      this.$axios.post('/projects', payload).then(
+      this.$axios.put('/projects', payload).then(
         res => {
           this.$alert.success({ message: 'Project added!' })
           this.$router.push('/projects')
         },
         err => {
-          this.$alert.warning({ message: err })
+          console.log(err)
         }
       )
     }
