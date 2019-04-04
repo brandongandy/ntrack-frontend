@@ -1,7 +1,7 @@
 <template>
   <v-container grid-list-md>
     <v-layout row wrap>
-      <v-flex xs6>
+      <v-flex xs12 sm6>
         <v-card>
           <v-card-title primary-title><h3 class="headline">Word Count Today</h3></v-card-title>
           <v-card-text><h3>{{ this.goal.words_today }}</h3> of {{ this.goal.goal_amount }}</v-card-text>
@@ -11,12 +11,12 @@
           </v-card-actions>
         </v-card>
       </v-flex>
-      <v-flex xs6>
+      <v-flex xs12 sm6>
         <v-card>
           <v-card-title primary-title><h3 class="headline">Last Updated Project</h3></v-card-title>
           <v-card-text><h3>{{ latestProject.name }}</h3>a Novel</v-card-text>
           <v-card-actions>
-            <v-btn flat color="primary" v-if="latestProject.id">View Details</v-btn>
+            <v-btn flat color="primary" v-if="latestProject.id" @click="$router.push('/project/view/' + latestProject.id)">View Details</v-btn>
             <v-btn flat color="secondary">Start New Project</v-btn>
           </v-card-actions>
         </v-card>

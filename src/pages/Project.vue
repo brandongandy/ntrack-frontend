@@ -26,6 +26,19 @@
         </v-card>
       </v-flex>
     </v-layout>
+    <v-layout row justify-end>
+      <v-flex shrink>
+        <v-tooltip top>
+          <template v-slot:activator="{ on }">
+            <v-btn icon
+              v-on="on">
+              <v-icon>delete</v-icon>
+            </v-btn>
+          </template>
+          <span>Delete Project</span>
+        </v-tooltip>
+      </v-flex>
+    </v-layout>
   </v-container>
   <!-- <b-container class="col-sm-12 col-lg-6">
     <project-summary :project="project" :inList="false" />

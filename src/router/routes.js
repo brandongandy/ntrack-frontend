@@ -13,11 +13,19 @@ const routes = [
       },
       {
         path: '/projects',
-        component: () => import('@/pages/Projects.vue')
+        component: () => import('@/pages/ProjectList.vue')
       },
       {
-        path: '/project/:id',
+        path: '/project/view/:id',
         component: () => import('@/pages/Project.vue')
+      },
+      {
+        path: '/project/edit/:id',
+        component: () => import('@/pages/ProjectEdit.vue')
+      },
+      {
+        path: '/project/new',
+        component: () => import('@/pages/ProjectEdit.vue')
       }
     ]
   },

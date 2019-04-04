@@ -7,11 +7,10 @@
       <v-flex shrink>
         <v-tooltip top>
           <template v-slot:activator="{ on }">
-            <v-btn
-              small icon
+            <v-btn icon
               color="success" v-if="inList"
               v-on="on"
-              @click="$router.push('project/' + project.id)">
+              @click="$router.push('/project/view/' + project.id)">
               <v-icon>arrow_forward</v-icon>
             </v-btn>
           </template>
@@ -19,13 +18,14 @@
         </v-tooltip>
         <v-tooltip top>
           <template v-slot:activator="{ on }">
-            <v-btn
-              small icon
+            <v-btn icon
               color="success" v-if="!inList"
               v-on="on"
-              @click="$router.push('edit-project/' + project.id)"><v-icon>edit</v-icon></v-btn>
+              @click="$router.push('edit/' + project.id)">
+              <v-icon>edit</v-icon>
+            </v-btn>
           </template>
-          <span>Edit Project</span>
+          <span>Edit Project Details</span>
         </v-tooltip>
       </v-flex>
     </v-layout>
@@ -39,7 +39,24 @@
         {{ this.percentFinished }}% finished
       </v-flex>
     </v-layout>
+    <v-flex>
       <v-progress-linear v-model="percentFinished"></v-progress-linear>
+    </v-flex>
+    <v-layout row v-if="!inList">
+      <v-flex grow></v-flex>
+      <v-flex shrink>
+        <v-tooltip top>
+          <template v-slot:activator="{ on }">
+            <v-btn icon
+            color="success"
+            v-on="on">
+              <v-icon>add</v-icon>
+            </v-btn>
+          </template>
+          <span>Add Words</span>
+        </v-tooltip>
+      </v-flex>
+    </v-layout>
   </v-sheet>
   <!-- <div>
     <b-row>

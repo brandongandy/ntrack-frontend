@@ -41,6 +41,7 @@ export default {
     items: [
       { icon: 'home', text: 'Home', route: '/index' },
       { icon: 'bookmarks', text: 'Projects', route: '/projects' },
+      { icon: 'bookmark', text: 'New Project', route: '/project/new' },
       { icon: 'question_answer', text: 'Queries', route: '/' },
       { divider: true },
       { icon: 'home', text: 'My Account' }
