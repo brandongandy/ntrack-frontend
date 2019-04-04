@@ -1,129 +1,75 @@
 <template>
-  <b-container class="col-sm-12 col-lg-6">
-    <b-row class="text-left">
-      <b-col><h3>{{ title }}</h3></b-col>
-    </b-row>
-
-    <b-row align-h="center">
-      <b-col class="text-left">
-        <b-form
-          @submit="onSubmit"
-          @reset="onReset">
-          <b-form-group
-            id="project-name"
-            label="Project Name:"
-            label-for="project-name-input">
-            <b-form-input
-              id="project-name-input"
-              type="text"
-              v-model="project.name"
-              required
-              placeholder="Enter project name">
-            </b-form-input>
-          </b-form-group>
-
-          <b-form-group
-            id="project-type"
-            label="Project Type:"
-            label-for="project-type-select">
-            <b-form-select
-              id="project-type-select"
+  <v-container grid-list-md>
+    <v-layout row wrap>
+      <v-flex xs12>
+        <h2 class="headline">{{ title }}</h2>
+      </v-flex>
+      <v-flex xs12 sm8>
+        <v-form ref="projectForm"
+          v-model="valid">
+          <v-text-field box
+            v-model="project.name"
+            :rules="nameRules"
+            label="Project Name"
+            required></v-text-field>
+            <v-select box
               v-model="project.type"
-              required
-              :options="projectTypes">
-              <template slot="first">
-                <option :value="null" disabled>-- Choose a project type --</option>
-              </template>
-            </b-form-select>
-          </b-form-group>
-
-          <b-form-group
-            id="project-blurb"
-            label="Premise / Blurb:"
-            label-for="project-blurb-input">
-            <b-form-textarea
-              id="project-blurb-input"
-              type="text"
-              v-model="project.blurb"
-              placeholder="Write down the premise of your project or a short blurb about it. (Optional)"
-              rows="2"
-              max-rows="3">
-            </b-form-textarea>
-          </b-form-group>
-
-          <!-- <b-form-group
-            id="project-goal-type"
-            label="Goal Type:"
-            label-for="project-goal-type-input">
-            <b-form-select
-              id="project-goal-type-input"
-              v-model="project.goalTypeId"
-              required
-              :options="projectTypes" disabled>
-              <template slot="first">
-                <option :value="1" disabled>Word Count</option>
-              </template>
-            </b-form-select>
-          </b-form-group> -->
-
-          <b-form-group
-            id="project-goal"
-            label="Word Count Goal:"
-            label-for="project-goal-input">
-            <b-form-input
-              id="project-goal-input"
-              type="number"
-              v-model="project.goalAmount"
-              required
-              placeholder="Project Goal">
-            </b-form-input>
-          </b-form-group>
-
-          <b-form-checkbox
-            id="project-started-check"
+              :rules="typeRules"
+              :items="projectTypes"
+              label="Project Type"></v-select>
+          <v-textarea box
+            v-model="project.blurb"
+            label="Blurb"></v-textarea>
+          <v-text-field box
+            v-model="project.goalAmount"
+            label="Project Goal"
+            mask="#########"
+            required></v-text-field>
+          <v-checkbox
+            color="primary"
             v-model="project.started"
-            :value="true"
-            :unchecked-value="false"
-            class="mb-2">
-            Already Started?
-          </b-form-checkbox>
-
-          <b-form-group
-            id="project-started-amount"
-            label="Amount Written:"
-            label-for="project-started-amount-input">
-            <b-form-input
-              id="project-started-amount-input"
-              type="number"
-              v-model="project.startAmount"
-              :disabled="!project.started" />
-          </b-form-group>
-
-          <b-form-group
-            id="project-due-date"
-            label="Due Date:"
-            label-for="project-due-date-input">
-            <b-form-input
-              id="project-due-date-input"
-              type="date"
-              v-model="project.dueDate"
-              required
-              placeholder="Due Date">
-            </b-form-input>
-          </b-form-group>
-
-          <b-button type="submit" variant="primary" size="sm">Submit</b-button>
-          <b-button type="reset" variant="warning" size="sm">Cancel</b-button>
-        </b-form>
-      </b-col>
-    </b-row>
-  </b-container>
+            label="Already started?"></v-checkbox>
+          <v-text-field box :disabled="!project.started"
+            v-model="project.startAmount"
+            label="Start Amount"
+            mask="#########"></v-text-field>
+          <v-menu
+            v-model="menu"
+            :close-on-content-click="false"
+            transition="scale-transition"
+            offset-y
+            full-width
+            min-width="290px">
+            <template v-slot:activator="{ on }">
+              <v-text-field box
+                v-model="project.dueDate"
+                label="Picker without buttons"
+                prepend-inner-icon="event"
+                readonly
+                v-on="on"
+              ></v-text-field>
+            </template>
+            <v-date-picker v-model="project.dueDate" @input="menu = false"></v-date-picker>
+          </v-menu>
+          <v-btn
+            :disabled="!valid"
+            color="success"
+            @click="onSubmit">Submit</v-btn>
+          <v-btn @click="onReset" flat >Cancel</v-btn>
+        </v-form>
+      </v-flex>
+      <v-flex xs12 sm6>
+      </v-flex>
+    </v-layout>
+  </v-container>
 </template>
 
 <script>
 export default {
   data () {
     return {
+      valid: true,
+      menu: '',
       title: '',
       projectTypes: [
         { value: 1, text: 'Novel' },
@@ -139,15 +85,22 @@ export default {
         goalAmount: 0,
         started: false,
         startAmount: 0,
-        startDate: new Date().toISOString(),
-        dueDate: new Date().toISOString(),
-        lastUpdate: new Date().toISOString()
-      }
+        startDate: new Date().toISOString().substr(0, 10),
+        dueDate: new Date().toISOString().substr(0, 10),
+        lastUpdate: new Date().toISOString().substr(0, 10)
+      },
+      nameRules: [
+        v => !!v || 'Project name cannot be blank'
+      ],
+      typeRules: [
+        v => !!v || 'Project type is required'
+      ]
     }
   },
   methods: {
     onSubmit (e) {
       e.preventDefault()
+      // this.$refs.projectForm.validate()
 
       let project = {
         'user_id': this.$auth.userId,
