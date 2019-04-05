@@ -1,67 +1,47 @@
 <template>
-  <b-modal
-    id="update-goal"
-    ref="modal"
-    :title="title"
-    hide-footer
-    class="text-left"
-    @shown="onShow">
-    <b-form @submit="onSubmit" @reset="onReset" class="w200">
-      <b-form-group
-        v-if="!project"
-        id="project-goal-type"
-        label="Project:"
-        label-for="project-select">
-        <b-form-select
-          id="project-select-input"
-          v-model="projectId"
-          :options="projectList"
-          required :disabled="!canChangeProject">
-          <template slot="first">
-            <option :value="undefined" disabled>-- Pick a project --</option>
-          </template>
-        </b-form-select>
-      </b-form-group>
+  <v-layout row justify-end class="mr-2">
+    <v-dialog v-model="dialog" persistent max-width="400px">
+      <template v-slot:activator="{ on }">
+        <v-btn color="success" small dark v-on="on">Add Words</v-btn>
+      </template>
+      <v-card>
+        <v-card-title>
+          <span class="headline">{{ this.title }}</span>
+        </v-card-title>
 
-      <b-form-group
-        id="update-amount"
-        label="Amount:"
-        label-for="update-amount-input">
-        <b-form-input
-          id="update-amount-input"
-          ref="amount"
-          type="number"
-          v-model="amount"
-          required
-          placeholder="Amount to Add">
-        </b-form-input>
-      </b-form-group>
+        <v-card-text>
+          <v-container grid-list-md>
+            <v-layout wrap>
+              <v-flex>
+                <v-text-field box
+                  label="Amount"
+                  v-model="amount"
+                  v-if="dialog"
+                  :autofocus="true"
+                  mask="#########" required></v-text-field>
+                <v-select box
+                  label="Project"
+                  v-model="projectId"
+                  :items="projectList"
+                  item-text="name"
+                  item-value="id"></v-select>
+              </v-flex>
+            </v-layout>
+          </v-container>
+        </v-card-text>
 
-      <b-form-group
-        id="goal-update-type"
-        label="Action:"
-        label-for="goal-update-type-select">
-        <b-form-select
-          id="goal-update-type-select"
-          v-model="addType"
-          required disabled>
-            <option :value="null">-- Choose Update Type --</option>
-            <option :value="0">Add to Total</option>
-            <option :value="1">Update Total</option>
-        </b-form-select>
-      </b-form-group>
-
-      <b-row class="text-right">
-        <b-col>
-          <b-button type="submit" variant="primary">Submit</b-button>
-          <b-button type="reset" variant="warning">Cancel</b-button>
-        </b-col>
-      </b-row>
-    </b-form>
-  </b-modal>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="blue-grey" small dark flat @click="onReset">Cancel</v-btn>
+          <v-btn color="success" small dark @click="dialog = false">Submit</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+  </v-layout>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 export default {
   props: {
     project: {
@@ -71,14 +51,17 @@ export default {
   },
   data () {
     return {
+      dialog: false,
       amount: 0,
       addType: 0,
       canChangeProject: false,
-      projectId: undefined,
-      projectList: []
+      projectId: undefined
     }
   },
   computed: {
+    ...mapGetters({
+      projectList: 'project/getProjectList'
+    }),
     title () {
       if (this.project) {
         return `Adding Words to ${this.project.name}`
@@ -103,40 +86,17 @@ export default {
     },
     onReset (e) {
       e.preventDefault()
-    },
-    onShow () {
-      if (!this.project) {
-        this.$axios.get('/projects/all').then(
-          res => {
-            let projects = res.data
-
-            let projList = projects.map(project => {
-              return {
-                value: project.id,
-                text: project.name
-              }
-            })
-            this.projectList = projList
-
-            this.canChangeProject = true
-          },
-          err => {
-            console.log(err)
-          }
-        )
-      } else {
-        this.projectId = this.project.id
-      }
+      this.projectId = null
+      this.amount = 0
+      this.dialog = false
     },
     postWork (payload) {
       this.$axios.put('/entries', payload).then(
         res => {
-          this.$alert.success({ message: 'Entry successfully posted!' })
-          this.$refs.modal.hide()
+          this.dialog = false
         },
         err => {
           console.log(err)
-          this.$alert.warning({ message: err })
         }
       )
     }
