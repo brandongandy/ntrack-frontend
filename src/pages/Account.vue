@@ -1,52 +1,62 @@
 <template>
-  <b-container class="text-left col-sm-12 col-lg-6">
-    <b-row>
-      <b-col>
-        <h3>Account Details</h3>
-      </b-col>
-    </b-row>
-
-    <b-row>
-      <b-col>
-        <p><strong>Email:</strong> {{ $auth.user.email }}</p>
-      </b-col>
-    </b-row>
-
-    <b-row>
-      <b-col>
-        <p><strong>Current Plan:</strong> Basic</p>
-      </b-col>
-    </b-row>
-
-    <b-row><b-col><h4>Plans:</h4></b-col></b-row>
-    <b-row class="text-center">
-      <b-col>
-        <ul class="list-group">
-          <li class="list-group-item list-group-item-primary"><h5>Basic</h5><i>Free</i></li>
-          <li class="list-group-item list-group-item-light">Features:</li>
-          <li class="list-group-item">Up to 5 Projects</li>
-          <li class="list-group-item">Word count tracking</li>
-          <li class="list-group-item">1 Query Tracked <font-awesome-icon icon="question-circle" v-b-popover.hover="'Coming soon!'"></font-awesome-icon></li>
-          <li class="list-group-item">Calendar Streak Tracker</li>
-        </ul>
-        <b-button class="align-center mt-2">Already Active</b-button>
-      </b-col>
-      <b-col>
-        <ul class="list-group">
-          <li class="list-group-item list-group-item-success"><h5>Pro</h5><i>$4.99/mo</i></li>
-          <li class="list-group-item list-group-item-light">Features:</li>
-          <li class="list-group-item"><span v-b-popover.hover="'Coming soon!'">Unlimited Projects</span></li>
-          <li class="list-group-item">Word count tracking</li>
-          <li class="list-group-item">Unlimited Queries Tracked</li>
-          <li class="list-group-item">Calendar Streak Tracker</li>
-          <li class="list-group-item">Advanced Writing Stats</li>
-          <li class="list-group-item">App Integration <font-awesome-icon icon="question-circle" v-b-popover.hover="'Plug in to apps like Scrivener and Google Docs to automatically track your word count progress for you!'"></font-awesome-icon></li>
-          <li class="list-group-item">Cloud Backups</li>
-        </ul>
-        <b-button class="align-center mt-2" variant="success">Purchase</b-button>
-      </b-col>
-    </b-row>
-  </b-container>
+  <v-container grid-list-md>
+    <v-layout row>
+      <v-flex>
+        <v-card class="card-body">
+          <v-card-title>
+            <v-container class="green darken-1 white--text card-header elevation-1">
+              <v-layout>
+                <v-flex>
+                  <span class="title">My Account</span><br />
+                </v-flex>
+              </v-layout>
+            </v-container>
+          </v-card-title>
+          <v-card-text>
+            <v-form>
+              <v-layout row wrap class="mx-2">
+                <v-flex xs6>
+                  <v-flex xs12 sm6>
+                  <v-spacer></v-spacer>
+                      <v-img
+                        src="https://randomuser.me/api/portraits/lego/1.jpg">
+                      </v-img>
+                    <v-card-actions>
+                      <v-spacer></v-spacer>
+                      <v-btn small dark flat color="blue-grey">Update Photo</v-btn>
+                      <v-spacer></v-spacer>
+                    </v-card-actions>
+                  </v-flex>
+                </v-flex>
+                <v-flex xs6>
+                  <v-flex>
+                    <v-text-field box
+                      label="First Name">
+                    </v-text-field>
+                  </v-flex>
+                  <v-flex>
+                    <v-text-field box
+                      label="Last Name">
+                    </v-text-field>
+                  </v-flex>
+                  <v-flex>
+                    <v-text-field box
+                      label="Email Address">
+                    </v-text-field>
+                  </v-flex>
+                </v-flex>
+                <v-flex xs12>
+                  <v-textarea box
+                    label="About Me">
+                  </v-textarea>
+                </v-flex>
+              </v-layout>
+            </v-form>
+          </v-card-text>
+        </v-card>
+      </v-flex>
+    </v-layout>
+  </v-container>
 </template>
 
 <script>
@@ -59,3 +69,17 @@ export default {
   }
 }
 </script>
+
+<style>
+.header-img {
+  width: 50px;
+  border-radius: 25px;
+  margin: 0;
+  padding: 0;
+}
+.card-header {
+  margin: -35px 10px 0px 10px;
+  display: block;
+  border-radius: 5px;
+}
+</style>
