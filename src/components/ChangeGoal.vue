@@ -1,48 +1,34 @@
 <template>
-  <b-modal
-    id="work-goal"
-    ref="modal"
-    :title="title"
-    hide-footer
-    class="text-left"
-    @shown="onShown">
-    <b-form @submit="onSubmit" @reset="onReset" class="w200">
-      <!-- <b-form-group
-        id="goal-type"
-        label="Goal Type:"
-        label-for="goal-type-select">
-        <b-form-select
-          id="goal-type-input"
-          v-model="goalTypeId"
-          required disabled>
-          <template slot="first">
-            <option :value="0">{{ this.newGoal.goal_type }}</option>
-          </template>
-        </b-form-select>
-      </b-form-group> -->
+  <v-dialog v-model="dialog" persistent max-width="400px">
+    <template v-slot:activator="{ on }">
+      <v-btn color="blue-grey" small dark v-on="on" class="mr-2">Change Goal</v-btn>
+    </template>
 
-      <b-form-group
-        id="update-amount"
-        label="Goal Amount:"
-        label-for="update-amount-input">
-        <b-form-input
-          id="update-amount-input"
-          ref="amount"
-          type="number"
-          v-model="goalAmount"
-          required
-          placeholder="Project Goal">
-        </b-form-input>
-      </b-form-group>
+    <v-card>
+      <v-card-title>Change Goal</v-card-title>
 
-      <b-row class="text-right">
-        <b-col>
-          <b-button type="submit" variant="primary">Submit</b-button>
-          <b-button type="reset" variant="warning">Cancel</b-button>
-        </b-col>
-      </b-row>
-    </b-form>
-  </b-modal>
+      <v-card-text>
+        <v-container grid-list-md>
+          <v-layout wrap>
+            <v-flex>
+              <v-text-field box
+                label="New Goal"
+                v-model="goalAmount"
+                v-if="dialog"
+                autofocus
+                mask="#########" required></v-text-field>
+            </v-flex>
+          </v-layout>
+        </v-container>
+      </v-card-text>
+
+      <v-card-actions>
+        <v-spacer></v-spacer>
+        <v-btn color="blue-grey" small dark flat @click="onReset">Cancel</v-btn>
+        <v-btn color="green" small dark @click="dialog = false">Update</v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
 </template>
 
 <script>
@@ -50,6 +36,7 @@ export default {
   props: ['goal'],
   data () {
     return {
+      dialog: false,
       title: 'Set New Work Goal',
       addType: 0,
       newGoal: {},
@@ -68,7 +55,7 @@ export default {
     onReset (e) {
       e.preventDefault()
       console.log(this.newGoal.goal_amount)
-      this.closeModal(false)
+      this.dialog = false
     },
     postGoal (newAmount) {
       this.$axios.put('/goals/' + newAmount).then(
