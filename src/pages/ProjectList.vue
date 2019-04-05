@@ -7,7 +7,7 @@
       <v-flex xs8><v-btn depressed small icon color="success"><v-icon>add</v-icon></v-btn></v-flex>
     </v-layout>
     <v-layout row wrap>
-      <v-flex xs8 v-for="project in projects" :key="project.id">
+      <v-flex xs8 v-for="project in projectList" :key="project.id">
         <project-summary :project="project" :inList="true" />
       </v-flex>
     </v-layout>
@@ -16,6 +16,7 @@
 
 <script>
 import ProjectSummary from '@/components/ProjectSummary'
+import { mapGetters } from 'vuex'
 export default {
   data () {
     return {
@@ -32,22 +33,10 @@ export default {
       this.$router.push('/project/' + data.item.name)
     }
   },
-  mounted () {
-    this.$axios.get('/projects/all').then(
-      res => {
-        if (res.data.length > 0) {
-          this.projects = res.data
-        } else {
-          this.noProjects = true
-        }
-        this.loading = false
-      },
-      err => {
-        this.noProjects = true
-        this.$alert.danger({ message: err })
-        this.loading = false
-      }
-    )
+  computed: {
+    ...mapGetters({
+      projectList: 'project/getProjectList'
+    })
   }
 }
 </script>
