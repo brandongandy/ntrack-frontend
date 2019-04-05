@@ -11,4 +11,7 @@ export default {
 </script>
 
 <style>
+.v-card {
+  border-radius: 5px;
+}
 </style>
