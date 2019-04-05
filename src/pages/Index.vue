@@ -4,20 +4,22 @@
       <v-flex xs12 sm6>
         <v-card>
           <v-card-title primary-title><h3 class="headline">Word Count Today</h3></v-card-title>
-          <v-card-text><h3>{{ this.goal.words_today }}</h3> of {{ this.goal.goal_amount }}</v-card-text>
+          <v-card-text><h3 class="display-1">{{ this.goal.words_today }}</h3> of {{ this.goal.goal_amount }}</v-card-text>
           <v-card-actions>
-            <v-btn flat color="primary">Add Words</v-btn>
-            <v-btn flat color="secondary">Change Goal</v-btn>
+            <v-spacer></v-spacer>
+            <update-goal />
+            <v-btn small dark color="blue-grey">Change Goal</v-btn>
           </v-card-actions>
         </v-card>
       </v-flex>
       <v-flex xs12 sm6>
         <v-card>
           <v-card-title primary-title><h3 class="headline">Last Updated Project</h3></v-card-title>
-          <v-card-text><h3>{{ latestProject.name }}</h3>a Novel</v-card-text>
+          <v-card-text><h3 class="display-1">{{ latestProject.name }}</h3>a Novel</v-card-text>
           <v-card-actions>
-            <v-btn flat color="primary" v-if="latestProject.id" @click="$router.push('/project/view/' + latestProject.id)">View Details</v-btn>
-            <v-btn flat color="secondary">Start New Project</v-btn>
+            <v-spacer></v-spacer>
+            <v-btn small color="success" v-if="latestProject.id" @click="$router.push('/project/view/' + latestProject.id)">View Details</v-btn>
+            <v-btn small dark color="blue-grey">New Project</v-btn>
           </v-card-actions>
         </v-card>
       </v-flex>
@@ -32,12 +34,12 @@
             color="primary">
           </v-calendar>
           <v-card-actions>
-            <v-btn flat icon color="primary"
+            <v-btn flat icon color="success"
               @click="$refs.calendar.prev()">
               <v-icon>arrow_back</v-icon>
             </v-btn>
             <v-spacer></v-spacer>
-            <v-btn flat icon color="primary"
+            <v-btn flat icon color="success"
               @click="$refs.calendar.next()">
               <v-icon>arrow_forward</v-icon>
             </v-btn>
@@ -49,10 +51,10 @@
 </template>
 
 <script>
-import UpdateGoal from '../components/UpdateGoal'
-import WorkGoal from '../components/WorkGoal'
-import WorkCalendar from '@/components/WorkCalendar'
+import UpdateGoal from '@/components/UpdateGoal'
+import ChangeGoal from '@/components/ChangeGoal'
 import { format, startOfMonth, endOfMonth } from 'date-fns'
+import { mapActions, mapGetters } from 'vuex'
 
 export default {
   data () {
@@ -73,8 +75,17 @@ export default {
   },
   components: {
     UpdateGoal,
-    WorkGoal,
-    WorkCalendar
+    ChangeGoal
+  },
+  computed: {
+    ...mapGetters({
+      projectList: 'project/getProjectList'
+    })
+  },
+  methods: {
+    ...mapActions({
+      setAllProjects: 'project/setAllProjects'
+    })
   },
   beforeCreate () {
     let todayDate = format(new Date(), 'YYYY-MM-DD')
@@ -91,6 +102,15 @@ export default {
     this.$axios.get('/projects/latest').then(
       res => {
         this.latestProject = res.data
+      },
+      err => {
+        console.log(err)
+      }
+    )
+
+    this.$axios.get('/projects/all').then(
+      res => {
+        this.setAllProjects(res.data)
       },
       err => {
         console.log(err)
