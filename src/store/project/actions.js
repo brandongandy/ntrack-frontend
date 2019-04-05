@@ -1,5 +1,4 @@
 export function setAllProjects (context, data) {
-  console.log(data)
   context.commit('SET_ALL_PROJECTS', data)
 }
 
