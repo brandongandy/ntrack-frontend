@@ -1,5 +1,4 @@
 <template>
-  <v-layout row justify-end class="mr-2">
     <v-dialog v-model="dialog" persistent max-width="400px">
       <template v-slot:activator="{ on }">
         <v-btn color="success" small dark v-on="on">Add Words</v-btn>
@@ -37,7 +36,6 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-  </v-layout>
 </template>
 
 <script>
