@@ -64,10 +64,6 @@ export default {
         words_today: 0,
         goal_amount: 0
       },
-      latestProject: {
-        id: null,
-        name: 'No projects yet!'
-      },
       calendarType: 'month',
       calendarStart: format(startOfMonth(new Date()), 'YYYY-MM-DD'),
       calendarEnd: format(endOfMonth(new Date()), 'YYYY-MM-DD')
@@ -79,7 +75,8 @@ export default {
   },
   computed: {
     ...mapGetters({
-      projectList: 'project/getProjectList'
+      projectList: 'project/getProjectList',
+      latestProject: 'project/getLatestProject'
     }),
     newProjectColor () {
       return (this.latestProject.id ? 'blue-grey' : 'green')
@@ -87,10 +84,11 @@ export default {
   },
   methods: {
     ...mapActions({
-      setAllProjects: 'project/setAllProjects'
+      getAllProjects: 'project/getAllProjects',
+      getLatestProject: 'project/getLatestProject'
     })
   },
-  beforeCreate () {
+  created () {
     let todayDate = format(new Date(), 'YYYY-MM-DD')
     this.$axios.get('/goals/' + todayDate)
       .then(
@@ -102,23 +100,13 @@ export default {
         }
       )
 
-    this.$axios.get('/projects/latest').then(
-      res => {
-        this.latestProject = res.data
-      },
-      err => {
-        console.log(err)
-      }
-    )
+    if (!this.latestProject) {
+      this.getLatestProject()
+    }
 
-    this.$axios.get('/projects/all').then(
-      res => {
-        this.setAllProjects(res.data)
-      },
-      err => {
-        console.log(err)
-      }
-    )
+    if (this.projectList.length === 0) {
+      this.getAllProjects()
+    }
   }
 }
 </script>
