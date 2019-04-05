@@ -5,10 +5,10 @@
         <v-card>
           <v-card-title primary-title><h3 class="headline">Word Count Today</h3></v-card-title>
           <v-card-text><h3 class="display-1">{{ this.goal.words_today }}</h3> of {{ this.goal.goal_amount }}</v-card-text>
-          <v-card-actions>
+          <v-card-actions justify-end>
             <v-spacer></v-spacer>
+            <change-goal />
             <update-goal />
-            <v-btn small dark color="blue-grey">Change Goal</v-btn>
           </v-card-actions>
         </v-card>
       </v-flex>
@@ -18,8 +18,8 @@
           <v-card-text><h3 class="display-1">{{ latestProject.name }}</h3>a Novel</v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn small color="success" v-if="latestProject.id" @click="$router.push('/project/view/' + latestProject.id)">View Details</v-btn>
-            <v-btn small dark color="blue-grey">New Project</v-btn>
+            <v-btn small color="success" v-if="latestProject.id" @click="$router.push('/projects/view/' + latestProject.id)">View Details</v-btn>
+            <v-btn small dark :color="newProjectColor" to="/projects/new">New Project</v-btn>
           </v-card-actions>
         </v-card>
       </v-flex>
@@ -80,7 +80,10 @@ export default {
   computed: {
     ...mapGetters({
       projectList: 'project/getProjectList'
-    })
+    }),
+    newProjectColor () {
+      return (this.latestProject.id ? 'blue-grey' : 'green')
+    }
   },
   methods: {
     ...mapActions({

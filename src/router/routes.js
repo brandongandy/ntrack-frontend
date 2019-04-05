@@ -12,20 +12,24 @@ const routes = [
         component: Index
       },
       {
-        path: '/projects',
+        path: '/projects/all',
         component: () => import('@/pages/ProjectList.vue')
       },
       {
-        path: '/project/view/:id',
+        path: '/projects/view/:id',
         component: () => import('@/pages/Project.vue')
       },
       {
-        path: '/project/edit/:id',
+        path: '/projects/edit/:id',
         component: () => import('@/pages/ProjectEdit.vue')
       },
       {
-        path: '/project/new',
+        path: '/projects/new',
         component: () => import('@/pages/ProjectEdit.vue')
+      },
+      {
+        path: '/users/me',
+        component: () => import('@/pages/Account.vue')
       }
     ]
   },
