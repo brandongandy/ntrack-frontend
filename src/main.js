@@ -6,11 +6,17 @@ import 'vuetify/dist/vuetify.min.css'
 import { format } from 'date-fns'
 import App from '@/App'
 import router from '@/router'
+import store from '@/store'
 import auth from '@/plugins/auth'
 import axios from '@/plugins/axios'
 
 Vue.config.productionTip = false
-Vue.use(Vuetify)
+Vue.use(Vuetify, {
+  theme: {
+    primary: '#43A047',
+    secondary: '#455A64'
+  }
+})
 Vue.use(auth)
 Vue.use(axios)
 Vue.use(format)
@@ -19,6 +25,7 @@ Vue.use(format)
 new Vue({
   el: '#app',
   router,
+  store,
   components: { App },
   template: '<App/>'
 })
