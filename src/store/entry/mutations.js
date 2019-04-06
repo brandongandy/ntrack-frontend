@@ -1,4 +1,5 @@
 import api from '@/plugins/axios'
+import { format } from 'date-fns'
 
 export function SET_GOAL (state, data) {
   state.goal = data
@@ -8,18 +9,22 @@ export function SET_ENTRY_LIST (state, data) {
   state.entryList = data
 }
 
-export function GET_ALL_PROJECTS (state) {
-  api.get('/projects/all').then(
+export function GET_GOAL (state) {
+  let todaysDate = format(new Date(), 'YYYY-MM-DD')
+  api.get('/goals/' + todaysDate).then(
     res => {
-      SET_ALL_PROJECTS(state, res.data)
+      SET_GOAL(state, res.data)
+    },
+    err => {
+      console.log(err)
     }
   )
 }
 
-export function GET_LATEST_PROJECT (state) {
-  api.get('/projects/latest').then(
+export function GET_ALL_ENTRIES (state) {
+  api.get('/entries/all').then(
     res => {
-      SET_LATEST_PROJECT(state, res.data)
+      SET_ENTRY_LIST(state, res.data)
     }
   )
 }
