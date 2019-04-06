@@ -1,8 +1,8 @@
 <template>
-  <v-container grid-list-md>
+  <v-container fluid grid-list-md>
     <v-layout row wrap>
       <v-flex xs12 md6 lg4>
-        <v-card>
+        <v-card class="mt-4">
           <v-card-title>
             <v-container class="primary white--text card-header elevation-1">
               <v-layout>
@@ -12,7 +12,7 @@
               </v-layout>
             </v-container>
           </v-card-title>
-          <v-card-text class="text-xs-center"><h3 class="display-1">{{ this.goal.words_today }}</h3> of {{ this.goal.goal_amount }}</v-card-text>
+          <v-card-text class="text-xs-center"><h3 class="display-2">{{ this.goal.words_today }}</h3> of {{ this.goal.goal_amount }}</v-card-text>
           <v-card-actions justify-end>
             <v-spacer></v-spacer>
             <change-goal />
@@ -21,7 +21,7 @@
         </v-card>
       </v-flex>
       <v-flex xs12 md6 lg4>
-        <v-card>
+        <v-card class="mt-4">
           <v-card-title>
             <v-container class="primary white--text card-header elevation-1">
               <v-layout>
@@ -31,7 +31,7 @@
               </v-layout>
             </v-container>
           </v-card-title>
-          <v-card-text class="text-xs-center"><h3 class="display-1">{{ latestProject.name }}</h3>a Novel</v-card-text>
+          <v-card-text class="text-xs-center"><h3 class="display-2">{{ latestProject.name }}</h3>a Novel</v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn small dark :color="newProjectColor" to="/projects/new">New Project</v-btn>
@@ -84,13 +84,10 @@ export default {
   data () {
     return {
       msg: this.$auth.user.name,
-      goal: {
-        words_today: 0,
-        goal_amount: 0
-      },
       calendarType: 'month',
       calendarStart: format(startOfMonth(new Date()), 'YYYY-MM-DD'),
-      calendarEnd: format(endOfMonth(new Date()), 'YYYY-MM-DD')
+      calendarEnd: format(endOfMonth(new Date()), 'YYYY-MM-DD'),
+      isFirstLoad: true
     }
   },
   components: {
@@ -100,7 +97,8 @@ export default {
   computed: {
     ...mapGetters({
       projectList: 'project/getProjectList',
-      latestProject: 'project/getLatestProject'
+      latestProject: 'project/getLatestProject',
+      goal: 'entry/getGoal'
     }),
     newProjectColor () {
       return (this.latestProject.id ? 'blue-grey' : 'green')
@@ -109,24 +107,29 @@ export default {
   methods: {
     ...mapActions({
       getAllProjects: 'project/getAllProjects',
-      getLatestProject: 'project/getLatestProject'
+      getLatestProject: 'project/getLatestProject',
+      getGoal: 'entry/getGoal'
     })
   },
   created () {
-    let todayDate = format(new Date(), 'YYYY-MM-DD')
-    this.$axios.get('/goals/' + todayDate)
-      .then(
-        res => {
-          this.goal = res.data
-        },
-        err => {
-          console.log(err)
-        }
-      )
-
+    // let todayDate = format(new Date(), 'YYYY-MM-DD')
+    // this.$axios.get('/goals/' + todayDate)
+    //   .then(
+    //     res => {
+    //       this.goal = res.data
+    //     },
+    //     err => {
+    //       console.log(err)
+    //     }
+    //   )
+    this.getGoal()
     this.getLatestProject()
 
     this.getAllProjects()
+    this.isFirstLoad = false
   }
 }
 </script>
+
+<style>
+</style>
