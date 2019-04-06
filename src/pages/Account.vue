@@ -1,7 +1,7 @@
 <template>
-  <v-container grid-list-md>
-    <v-layout row>
-      <v-flex xs12 xl6>
+  <v-container fluid grid-list-md>
+    <v-layout row wrap>
+      <v-flex xs12 lg8 xl6 class="mt-4">
         <v-card class="card-body">
           <v-card-title>
             <v-container class="primary white--text card-header elevation-1">
@@ -78,7 +78,8 @@
           </v-card-actions>
         </v-card>
       </v-flex>
-      <v-flex xs12 xl6>
+
+      <v-flex xs12 lg8 xl6 class="mt-4">
         <v-card class="card-body">
           <v-card-title>
             <v-container class="primary white--text card-header elevation-1">
@@ -154,11 +155,5 @@ export default {
 
 .rounded {
   border-radius: 100px;
-}
-
-.card-header {
-  margin: -35px 10px 0px 10px;
-  display: block;
-  border-radius: 5px;
 }
 </style>
