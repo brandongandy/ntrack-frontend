@@ -18,8 +18,8 @@
           <v-card-text><h3 class="display-1">{{ latestProject.name }}</h3>a Novel</v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn small color="success" v-if="latestProject.id" @click="$router.push('/projects/view/' + latestProject.id)">View Details</v-btn>
             <v-btn small dark :color="newProjectColor" to="/projects/new">New Project</v-btn>
+            <v-btn small color="success" v-if="latestProject.id" @click="$router.push('/projects/view/' + latestProject.id)">View Details</v-btn>
           </v-card-actions>
         </v-card>
       </v-flex>
