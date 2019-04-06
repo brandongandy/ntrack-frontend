@@ -39,7 +39,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 export default {
   props: {
     project: {
@@ -58,7 +58,8 @@ export default {
   },
   computed: {
     ...mapGetters({
-      projectList: 'project/getProjectList'
+      projectList: 'project/getProjectList',
+      goal: 'entry/getGoal'
     }),
     title () {
       if (this.project) {
@@ -69,6 +70,10 @@ export default {
     }
   },
   methods: {
+    ...mapActions({
+      setGoal: 'entry/setGoal',
+      getLatestProject: 'project/getLatestProject'
+    }),
     onSubmit (e) {
       e.preventDefault()
 
@@ -92,6 +97,12 @@ export default {
     postWork (payload) {
       this.$axios.put('/entries/', payload).then(
         res => {
+          var newGoalObj = {
+            words_today: this.goal.words_today + res.data.amount,
+            goal_amount: this.goal.goal_amount
+          }
+          this.setGoal(newGoalObj)
+          this.getLatestProject()
           this.dialog = false
         },
         err => {
