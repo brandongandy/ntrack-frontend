@@ -2,11 +2,11 @@
 <div id="app">
   <v-app>
     <v-navigation-drawer fixed floating
-      class="blue-grey darken-2"
+      class="secondary"
       app dark
       v-model="drawer"
       width="250">
-      <v-toolbar  class="green darken-1">
+      <v-toolbar  class="primary">
         <v-list class="pa-0">
           <v-list-tile avatar>
             <v-list-tile-avatar>
@@ -25,7 +25,7 @@
           :key="item.title"
           :to="item.route"
           active-class="hightlighted"
-          :class="item.route === $route.path ? 'highlighted' : ''">
+          :class="item.route === $route.path ? 'highlighted primary' : ''">
           <v-list-tile-action>
             <v-icon>{{ item.icon }}</v-icon>
           </v-list-tile-action>
@@ -36,9 +36,9 @@
         </v-list-tile>
       </v-list>
     </v-navigation-drawer>
-    <v-toolbar class="green darken-1" dark fixed app>
+    <v-toolbar class="primary" dark fixed app>
       <v-toolbar-side-icon @click.native="drawer = !drawer"></v-toolbar-side-icon>
-      <span class="title ml-3 mr-5">nTrack&nbsp;<span class="text">v0.2</span></span>
+      <span class="title ml-3">Inscripient&nbsp;<span class="subheading">v0.2</span></span>
       <v-spacer></v-spacer>
       <v-btn flat icon><v-icon>power_settings_new</v-icon></v-btn>
     </v-toolbar>
@@ -82,7 +82,6 @@ export default {
   margin: 10px 15px;
 }
 .highlighted {
-  background-color: #43A047;
   box-shadow: 0px 0px 4px #37474F;
 }
 </style>
