@@ -1,12 +1,13 @@
 import axios from 'axios'
 
-const http = axios.create({
+const api = axios.create({
   baseURL: 'http://127.0.0.1:5000',
   timeout: 1000,
-  headers: {'Content-Type': 'application/json'}
+  headers: {'Content-Type': 'application/json'},
+  crossDomain: true
 })
 
-http.interceptors.request.use(
+api.interceptors.request.use(
   function (config) {
     const token = getBearerToken()
     config.headers.Authorization = `Bearer ${token}`
@@ -21,8 +22,4 @@ function getBearerToken () {
   return localStorage.getItem('access_token')
 }
 
-export default {
-  install: function (Vue) {
-    Vue.prototype.$axios = http
-  }
-}
+export default api
