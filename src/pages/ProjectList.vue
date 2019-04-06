@@ -30,7 +30,7 @@ export default {
   },
   methods: {
     go (data) {
-      this.$router.push('/project/' + data.item.name)
+      this.$router.push('/projects/' + data.item.name)
     }
   },
   computed: {

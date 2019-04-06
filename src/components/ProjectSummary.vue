@@ -10,7 +10,7 @@
             <v-btn icon
               color="success" v-if="inList"
               v-on="on"
-              @click="$router.push('/project/view/' + project.id)">
+              @click="$router.push('/projects/view/' + project.id)">
               <v-icon>arrow_forward</v-icon>
             </v-btn>
           </template>
