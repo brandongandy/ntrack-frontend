@@ -1,64 +1,84 @@
 <template>
   <v-container grid-list-md>
-    <v-layout row wrap>
-      <v-flex xs12>
-        <h2 class="headline">{{ title }}</h2>
-      </v-flex>
-      <v-flex xs12 sm8>
-        <v-form ref="projectForm"
-          v-model="valid">
-          <v-text-field box
-            v-model="project.name"
-            :rules="nameRules"
-            label="Project Name"
-            required></v-text-field>
-            <v-select box
-              v-model="project.type"
-              :rules="typeRules"
-              :items="projectTypes"
-              label="Project Type"></v-select>
-          <v-textarea box
-            v-model="project.blurb"
-            label="Blurb"></v-textarea>
-          <v-text-field box
-            v-model="project.goalAmount"
-            label="Project Goal"
-            mask="#########"
-            required></v-text-field>
-          <v-checkbox
-            color="primary"
-            v-model="project.started"
-            label="Already started?"></v-checkbox>
-          <v-text-field box :disabled="!project.started"
-            v-model="project.startAmount"
-            label="Start Amount"
-            mask="#########"></v-text-field>
-          <v-menu
-            v-model="menu"
-            :close-on-content-click="false"
-            transition="scale-transition"
-            offset-y
-            full-width
-            min-width="290px">
-            <template v-slot:activator="{ on }">
-              <v-text-field box
-                v-model="project.dueDate"
-                label="Picker without buttons"
-                prepend-inner-icon="event"
-                readonly
-                v-on="on"
-              ></v-text-field>
-            </template>
-            <v-date-picker v-model="project.dueDate" @input="menu = false"></v-date-picker>
-          </v-menu>
-          <v-btn
-            :disabled="!valid"
-            color="success"
-            @click="onSubmit">Submit</v-btn>
-          <v-btn @click="onReset" flat >Cancel</v-btn>
-        </v-form>
-      </v-flex>
-      <v-flex xs12 sm6>
+    <v-layout row>
+      <v-flex xs12 lg6>
+        <v-card>
+          <v-card-title>
+            <v-container class="primary white--text card-header elevation-1">
+              <v-layout>
+                <v-flex>
+                  <span class="title">{{ title }}</span><br />
+                </v-flex>
+              </v-layout>
+            </v-container>
+          </v-card-title>
+
+          <v-card-text>
+            <v-form ref="projectForm"
+              v-model="valid">
+              <v-layout row wrap class="mx-2">
+                <v-flex>
+                  <v-text-field box
+                    v-model="project.name"
+                    :rules="nameRules"
+                    label="Project Name"
+                    required></v-text-field>
+                    <v-select box
+                      v-model="project.type"
+                      :rules="typeRules"
+                      :items="projectTypes"
+                      label="Project Type"></v-select>
+                  <v-textarea box
+                    v-model="project.blurb"
+                    label="Blurb"></v-textarea>
+                  <v-text-field box
+                    v-model="project.goalAmount"
+                    label="Project Goal"
+                    mask="#########"
+                    required></v-text-field>
+                  <v-checkbox
+                    color="primary"
+                    v-model="project.started"
+                    label="Already started?"></v-checkbox>
+                  <v-text-field box :disabled="!project.started"
+                    v-model="project.startAmount"
+                    label="Start Amount"
+                    mask="#########"></v-text-field>
+                  <v-menu
+                    v-model="menu"
+                    :close-on-content-click="false"
+                    transition="scale-transition"
+                    offset-y
+                    full-width
+                    min-width="290px">
+                    <template v-slot:activator="{ on }">
+                      <v-text-field box
+                        v-model="project.dueDate"
+                        label="Picker without buttons"
+                        prepend-inner-icon="event"
+                        readonly
+                        v-on="on">
+                      </v-text-field>
+                    </template>
+                    <v-date-picker
+                      v-model="project.dueDate"
+                      @input="menu = false">
+                    </v-date-picker>
+                  </v-menu>
+                </v-flex>
+              </v-layout>
+            </v-form>
+          </v-card-text>
+
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn @click="onReset" small flat>Cancel</v-btn>
+            <v-btn
+              :disabled="!valid"
+              color="success" small
+              @click="onSubmit">Submit</v-btn>
+          </v-card-actions>
+        </v-card>
       </v-flex>
     </v-layout>
   </v-container>

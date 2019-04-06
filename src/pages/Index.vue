@@ -3,8 +3,16 @@
     <v-layout row wrap>
       <v-flex xs12 md6 lg4>
         <v-card>
-          <v-card-title primary-title><h3 class="headline">Word Count Today</h3></v-card-title>
-          <v-card-text><h3 class="display-1">{{ this.goal.words_today }}</h3> of {{ this.goal.goal_amount }}</v-card-text>
+          <v-card-title>
+            <v-container class="primary white--text card-header elevation-1">
+              <v-layout>
+                <v-flex>
+                  <span class="title">Word Count Today</span><br />
+                </v-flex>
+              </v-layout>
+            </v-container>
+          </v-card-title>
+          <v-card-text class="text-xs-center"><h3 class="display-1">{{ this.goal.words_today }}</h3> of {{ this.goal.goal_amount }}</v-card-text>
           <v-card-actions justify-end>
             <v-spacer></v-spacer>
             <change-goal />
@@ -14,8 +22,16 @@
       </v-flex>
       <v-flex xs12 md6 lg4>
         <v-card>
-          <v-card-title primary-title><h3 class="headline">Last Updated Project</h3></v-card-title>
-          <v-card-text><h3 class="display-1">{{ latestProject.name }}</h3>a Novel</v-card-text>
+          <v-card-title>
+            <v-container class="primary white--text card-header elevation-1">
+              <v-layout>
+                <v-flex>
+                  <span class="title">Last Updated Project</span><br />
+                </v-flex>
+              </v-layout>
+            </v-container>
+          </v-card-title>
+          <v-card-text class="text-xs-center"><h3 class="display-1">{{ latestProject.name }}</h3>a Novel</v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn small dark :color="newProjectColor" to="/projects/new">New Project</v-btn>
@@ -24,8 +40,16 @@
         </v-card>
       </v-flex>
       <v-flex md12 lg8>
-        <v-card>
-          <v-card-title primary-title><h3 class="headline">Recent Work History</h3></v-card-title>
+        <v-card class="mt-4">
+          <v-card-title>
+            <v-container class="primary white--text card-header elevation-1">
+              <v-layout>
+                <v-flex>
+                  <span class="title">Recent Work History</span><br />
+                </v-flex>
+              </v-layout>
+            </v-container>
+          </v-card-title>
           <v-calendar class="pa-3"
             ref="calendar"
             v-model="calendarStart"
