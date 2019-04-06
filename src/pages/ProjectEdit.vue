@@ -1,8 +1,8 @@
 <template>
-  <v-container grid-list-md>
+  <v-container fluid grid-list-md>
     <v-layout row>
       <v-flex xs12 lg6>
-        <v-card>
+        <v-card class="mt-4">
           <v-card-title>
             <v-container class="primary white--text card-header elevation-1">
               <v-layout>
