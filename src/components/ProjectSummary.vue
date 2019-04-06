@@ -1,98 +1,61 @@
 <template>
-  <v-sheet class="pa-3 elevation-1">
-    <v-layout row>
-      <v-flex grow>
-        <h2>{{ project.name }}</h2>
-      </v-flex>
-      <v-flex shrink>
-        <v-tooltip top>
-          <template v-slot:activator="{ on }">
-            <v-btn icon
-              color="success" v-if="inList"
-              v-on="on"
-              @click="$router.push('/projects/view/' + project.id)">
-              <v-icon>arrow_forward</v-icon>
-            </v-btn>
-          </template>
-          <span>View Project</span>
-        </v-tooltip>
-        <v-tooltip top>
-          <template v-slot:activator="{ on }">
-            <v-btn icon
-              color="success" v-if="!inList"
-              v-on="on"
-              @click="$router.push('edit/' + project.id)">
-              <v-icon>edit</v-icon>
-            </v-btn>
-          </template>
-          <span>Edit Project Details</span>
-        </v-tooltip>
-      </v-flex>
-    </v-layout>
-    <p v-if="!inList">{{ project.goal_amount }} words before {{ project.due_date }}</p>
-    <hr v-if="!inList" />
-    <v-layout row>
-      <v-flex>
-        {{ project.word_count }} / {{ project.goal_amount }}
-      </v-flex>
-      <v-flex shrink>
-        {{ this.percentFinished }}% finished
-      </v-flex>
-    </v-layout>
-    <v-flex>
-      <v-progress-linear v-model="percentFinished"></v-progress-linear>
-    </v-flex>
-    <v-layout row v-if="!inList">
-      <v-flex grow></v-flex>
-      <v-flex shrink>
-        <v-tooltip top>
-          <template v-slot:activator="{ on }">
-            <v-btn icon
-            color="success"
-            v-on="on">
-              <v-icon>add</v-icon>
-            </v-btn>
-          </template>
-          <span>Add Words</span>
-        </v-tooltip>
-      </v-flex>
-    </v-layout>
-  </v-sheet>
-  <!-- <div>
-    <b-row>
-      <b-col lg="6" class="text-left">
-        <h3>{{ project.name }}</h3>
-      </b-col>
-      <b-col lg="6" class="text-right">
-        <span>
-          <b-button size="sm" variant="success" v-if="inList" @click="$router.push('project/' + project.id)">View</b-button>
-          <b-button size="sm" variant="success" v-else>Edit</b-button>
-        </span>
-      </b-col>
-    </b-row>
-    <p class="text-muted mt-3" v-if="!inList">{{ project.goal_amount }} words before {{ project.due_date }}</p>
-    <hr v-if="!inList">
-    <b-row>
-      <b-col cols="6" class="text-left">{{ project.word_count }} / {{ project.goal_amount }}</b-col>
-      <b-col cols="6" class="text-right">{{ this.percentFinished }}% finished</b-col>
-    </b-row>
-    <b-row>
-      <b-col>
-        <b-progress :value="project.word_count" :max="project.goal_amount" />
-      </b-col>
-    </b-row>
-    <b-row class="mt-1 text-right">
-      <b-col>
-        <b-button
-          variant="success"
-          size="sm"
-          v-b-modal.update-goal
-          v-if="!inList">
-          Update
-        </b-button>
-      </b-col>
-    </b-row>
-  </div> -->
+  <v-card class="mt-4">
+      <v-card-title>
+        <v-container class="white--text card-header elevation-1" :class="determineHeaderBackground">
+          <v-layout align-center>
+            <v-flex>
+              <span class="title">{{ project.name }}</span><v-spacer></v-spacer>
+            </v-flex>
+            <v-flex shrink class="pa-0">
+              <v-tooltip top>
+                <template v-slot:activator="{ on }">
+                  <v-btn icon small class="ma-0"
+                    color="primary" dark v-if="inList"
+                    v-on="on"
+                    @click="$router.push('/projects/view/' + project.id)">
+                    <v-icon>arrow_forward</v-icon>
+                  </v-btn>
+                </template>
+                <span>View Project</span>
+              </v-tooltip>
+              <v-tooltip top>
+                <template v-slot:activator="{ on }">
+                  <v-btn icon small depressed class="ma-0"
+                    color="accent" v-if="!inList"
+                    v-on="on"
+                    @click="$router.push('edit/' + project.id)">
+                    <v-icon>settings</v-icon>
+                  </v-btn>
+                </template>
+                <span>Edit Project Details</span>
+              </v-tooltip>
+            </v-flex>
+          </v-layout>
+        </v-container>
+      </v-card-title>
+      <v-card-text>
+        <!-- <p v-if="!inList">{{ project.goal_amount }} words before {{ project.due_date }}</p> -->
+        <v-layout row wrap class="mx-2">
+          <v-flex>
+            <span class="subheading">
+              {{ project.word_count }} / {{ project.goal_amount }}
+            </span>
+          </v-flex>
+          <v-flex shrink>
+            <span class="subheading">
+              {{ this.percentFinished }}% finished
+            </span>
+          </v-flex>
+          <v-flex xs12>
+            <v-progress-linear v-model="percentFinished"></v-progress-linear>
+          </v-flex>
+        </v-layout>
+      </v-card-text>
+      <v-card-actions v-if="!inList" class="mr-4">
+        <v-spacer></v-spacer>
+        <v-btn color="primary" small>Add Words</v-btn>
+      </v-card-actions>
+  </v-card>
 </template>
 
 <script>
@@ -108,6 +71,13 @@ export default {
     percentFinished () {
       let percent = this.project.word_count / this.project.goal_amount * 100.00
       return percent.toFixed(0)
+    },
+    determineHeaderBackground () {
+      if (this.inList) {
+        return 'accent'
+      } else {
+        return 'primary'
+      }
     }
   }
 }

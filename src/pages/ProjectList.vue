@@ -15,7 +15,7 @@
                       <v-btn icon small depressed class="ma-0"
                         color="accent"
                         v-on="on"
-                        to="/project/new">
+                        to="/projects/new">
                         <v-icon>add</v-icon>
                       </v-btn>
                     </template>
