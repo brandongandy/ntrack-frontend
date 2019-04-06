@@ -100,13 +100,9 @@ export default {
         }
       )
 
-    if (!this.latestProject) {
-      this.getLatestProject()
-    }
+    this.getLatestProject()
 
-    if (this.projectList.length === 0) {
-      this.getAllProjects()
-    }
+    this.getAllProjects()
   }
 }
 </script>
