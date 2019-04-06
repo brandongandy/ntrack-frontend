@@ -35,7 +35,7 @@
           <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn small dark :color="newProjectColor" to="/projects/new">New Project</v-btn>
-            <v-btn small color="success" v-if="latestProject.id" @click="$router.push('/projects/view/' + latestProject.id)">View Details</v-btn>
+            <v-btn small color="primary" v-if="latestProject.id" @click="$router.push('/projects/view/' + latestProject.id)">View Details</v-btn>
           </v-card-actions>
         </v-card>
       </v-flex>
@@ -58,12 +58,12 @@
             color="primary">
           </v-calendar>
           <v-card-actions>
-            <v-btn flat icon color="success"
+            <v-btn flat icon color="primary"
               @click="$refs.calendar.prev()">
               <v-icon>arrow_back</v-icon>
             </v-btn>
             <v-spacer></v-spacer>
-            <v-btn flat icon color="success"
+            <v-btn flat icon color="primary"
               @click="$refs.calendar.next()">
               <v-icon>arrow_forward</v-icon>
             </v-btn>

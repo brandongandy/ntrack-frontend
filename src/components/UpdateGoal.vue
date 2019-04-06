@@ -1,7 +1,7 @@
 <template>
     <v-dialog v-model="dialog" persistent max-width="400px">
       <template v-slot:activator="{ on }">
-        <v-btn color="success" small dark v-on="on">Add Words</v-btn>
+        <v-btn color="primary" small dark v-on="on">Add Words</v-btn>
       </template>
       <v-card>
         <v-card-title>
@@ -32,7 +32,7 @@
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn color="blue-grey" small dark flat @click="onReset">Cancel</v-btn>
-          <v-btn color="success" small dark @click="onSubmit">Submit</v-btn>
+          <v-btn color="primary" small dark @click="onSubmit">Submit</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
