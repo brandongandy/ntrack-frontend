@@ -27,11 +27,11 @@
           active-class="hightlighted"
           :class="item.route === $route.path ? 'highlighted primary' : ''">
           <v-list-tile-action>
-            <v-icon>{{ item.icon }}</v-icon>
+            <v-icon :color="item.iconColor">{{ item.icon }}</v-icon>
           </v-list-tile-action>
           <v-divider v-if="item.divider"></v-divider>
           <v-list-tile-content>
-            <v-list-tile-title>{{ item.text }}</v-list-tile-title>
+            <v-list-tile-title>{{ item.text }} </v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
       </v-list>
@@ -60,7 +60,7 @@ export default {
       { icon: 'home', text: 'Home', route: '/index' },
       { icon: 'bookmarks', text: 'Projects', route: '/projects/all' },
       { icon: 'bookmark', text: 'New Project', route: '/projects/new' },
-      { icon: 'question_answer', text: 'Queries', route: '/' },
+      { icon: 'question_answer', iconColor: 'accent', text: 'Queries', route: '/' },
       { divider: true },
       { icon: 'account_circle', text: 'My Account', route: '/users/me' }
     ]

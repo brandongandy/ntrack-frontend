@@ -1,7 +1,7 @@
 <template>
   <v-container grid-list-md>
     <v-layout row wrap>
-      <v-flex xs12 sm6>
+      <v-flex xs12 md6 lg4>
         <v-card>
           <v-card-title primary-title><h3 class="headline">Word Count Today</h3></v-card-title>
           <v-card-text><h3 class="display-1">{{ this.goal.words_today }}</h3> of {{ this.goal.goal_amount }}</v-card-text>
@@ -12,7 +12,7 @@
           </v-card-actions>
         </v-card>
       </v-flex>
-      <v-flex xs12 sm6>
+      <v-flex xs12 md6 lg4>
         <v-card>
           <v-card-title primary-title><h3 class="headline">Last Updated Project</h3></v-card-title>
           <v-card-text><h3 class="display-1">{{ latestProject.name }}</h3>a Novel</v-card-text>
@@ -23,7 +23,7 @@
           </v-card-actions>
         </v-card>
       </v-flex>
-      <v-flex xs12>
+      <v-flex md12 lg8>
         <v-card>
           <v-card-title primary-title><h3 class="headline">Recent Work History</h3></v-card-title>
           <v-calendar class="pa-3"
