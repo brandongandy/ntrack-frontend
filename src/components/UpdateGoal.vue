@@ -23,7 +23,7 @@
                   v-model="projectId"
                   :items="projectList"
                   item-text="name"
-                  item-value="id"></v-select>
+                  item-value="id" required></v-select>
               </v-flex>
             </v-layout>
           </v-container>
@@ -32,7 +32,7 @@
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn color="blue-grey" small dark flat @click="onReset">Cancel</v-btn>
-          <v-btn color="success" small dark @click="dialog = false">Submit</v-btn>
+          <v-btn color="success" small dark @click="onSubmit">Submit</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -81,6 +81,7 @@ export default {
       }
 
       this.postWork(payload)
+      this.dialog = false
     },
     onReset (e) {
       e.preventDefault()
@@ -89,7 +90,7 @@ export default {
       this.dialog = false
     },
     postWork (payload) {
-      this.$axios.put('/entries', payload).then(
+      this.$axios.put('/entries/', payload).then(
         res => {
           this.dialog = false
         },
