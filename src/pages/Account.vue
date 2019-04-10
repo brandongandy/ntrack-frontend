@@ -1,10 +1,10 @@
 <template>
   <v-container fluid grid-list-md>
     <v-layout row wrap>
-      <v-flex xs12 lg8 xl6 class="mt-4">
+      <v-flex xs12 xl6 class="mt-4">
         <v-card class="card-body">
           <v-card-title>
-            <v-container class="primary white--text card-header elevation-1">
+            <v-container fluid class="primary white--text card-header elevation-1">
               <v-layout>
                 <v-flex>
                   <span class="title">Account Info</span><br />
@@ -79,10 +79,10 @@
         </v-card>
       </v-flex>
 
-      <v-flex xs12 lg8 xl6 class="mt-4">
+      <v-flex xs12 md8 xl6 class="mt-4">
         <v-card class="card-body">
           <v-card-title>
-            <v-container class="primary white--text card-header elevation-1">
+            <v-container fluid class="primary white--text card-header elevation-1">
               <v-layout>
                 <v-flex>
                   <span class="title">Privacy Settings</span><br />
