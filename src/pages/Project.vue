@@ -1,24 +1,48 @@
 <template>
   <v-container fluid grid-list-md>
     <v-layout row wrap>
-      <v-flex xs12>
+      <v-flex xs12 xl8>
         <project-summary v-if="project !== undefined" :project="project" :inList="false" />
       </v-flex>
-      <v-flex>
+      <v-flex xs12 class="mt-4">
         <v-card>
-          <v-card-title primary-title><h3>Recent Word Count Activity</h3></v-card-title>
+          <v-card-title>
+            <v-container fluid class="primary white--text card-header elevation-1">
+              <v-layout>
+                <v-flex>
+                  <span class="title">Project Info</span><br />
+                </v-flex>
+              </v-layout>
+            </v-container>
+          </v-card-title>
+          <v-card-text class="mx-2">
+            <p><span class="body-2">Author: </span>{{ this.$auth.user.name }}</p>
+            <p><span class="body-2">Genre: </span></p>
+            <p><span class="body-2">Blurb / Synopsis:</span> {{ project.blurb }}</p>
+            <p><span class="body-2">Due Date: </span>{{ project.due_date }}</p>
+          </v-card-text>
+        </v-card>
+      </v-flex>
+      <v-flex xs12 class="mt-4">
+        <v-card>
+          <v-card-title>
+            <v-container fluid class="primary white--text card-header elevation-1">
+              <v-layout>
+                <v-flex>
+                  <span class="title">Recent Activity</span><br />
+                </v-flex>
+              </v-layout>
+            </v-container>
+          </v-card-title>
           <v-card-text>
-            <div class="text-xs-center" v-if="!loaded">
-              <v-progress-circular
-                indeterminate
-                color="accent"></v-progress-circular>
-            </div>
-            <v-data-table v-if="loaded"
+            <v-data-table
               :headers="headers"
               :items="entries"
+              :loading="!loaded"
               class="elevation-1">
+              <v-progress-linear v-slot:progress color="primary" indeterminate></v-progress-linear>
               <template v-slot:no-data>
-                <v-alert :value="true" color="warning" icon="warning">
+                <v-alert :value="true" color="accent" icon="warning">
                   Sorry, nothing to display here :(
                 </v-alert>
               </template>
@@ -47,38 +71,6 @@
       </v-flex>
     </v-layout>
   </v-container>
-  <!-- <b-container class="col-sm-12 col-lg-6">
-    <project-summary :project="project" :inList="false" />
-
-    <b-row class="mt-3 mb-3">
-      <b-col class="text-left"><h4>Work History</h4></b-col>
-    </b-row>
-    <b-row>
-      <b-col>
-        <b-table :items="entries" :busy="isBusy">
-          <div slot="table-busy" class="text-center text-danger my-2">
-            <b-spinner class="align-middle" />
-            <strong>Loading...</strong>
-          </div>
-        </b-table>
-      </b-col>
-    </b-row>
-
-    <b-col>
-      <b-button size="sm" variant="light">Archive Project</b-button>
-      <b-button size="sm" variant="light" v-b-modal.deleteModal>Delete Project</b-button>
-    </b-col>
-    <update-goal ref="updateDialog" :project="project" />
-    <b-modal
-      id="deleteModal"
-      ref="deleteModal"
-      centered
-      title="Do you really want to delete this project?"
-      class="text-left"
-      @ok="deleteProject">
-      <p> This cannot be undone. All word count entries associated with this project will also be deleted.</p>
-    </b-modal>
-  </b-container> -->
 </template>
 
 <script>
@@ -97,13 +89,7 @@ export default {
         { text: 'Removed', value: 'removed' },
         { text: 'Total', value: 'total' }
       ],
-      entries:
-      [
-        { work_date: '2019-03-01', added: 234, removed: 0, total: 234 },
-        { work_date: '2019-03-02', added: 654, removed: -123, total: 531 },
-        { work_date: '2019-03-03', added: 268, removed: -10, total: 258 },
-        { work_date: '2019-03-04', added: 1765, removed: -243, total: 1522 }
-      ],
+      entries: [],
       isBusy: true
     }
   },
