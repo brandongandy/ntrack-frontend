@@ -7,22 +7,29 @@
       <v-flex>
         <v-card>
           <v-card-title primary-title><h3>Recent Word Count Activity</h3></v-card-title>
-        <v-data-table
-          :headers="headers"
-          :items="entries"
-          class="elevation-1">
-          <template v-slot:no-data>
-            <v-alert :value="true" color="warning" icon="warning">
-              Sorry, nothing to display here :(
-            </v-alert>
-          </template>
-          <template v-slot:items="props">
-            <td>{{ formatDate(new Date(props.item.work_date)) }}</td>
-            <td>{{ props.item.added }}</td>
-            <td>{{ props.item.removed }}</td>
-            <td>{{ props.item.total }}</td>
-          </template>
-        </v-data-table>
+          <v-card-text>
+            <div class="text-xs-center" v-if="!loaded">
+              <v-progress-circular
+                indeterminate
+                color="accent"></v-progress-circular>
+            </div>
+            <v-data-table v-if="loaded"
+              :headers="headers"
+              :items="entries"
+              class="elevation-1">
+              <template v-slot:no-data>
+                <v-alert :value="true" color="warning" icon="warning">
+                  Sorry, nothing to display here :(
+                </v-alert>
+              </template>
+              <template v-slot:items="props">
+                <td>{{ formatDate(new Date(props.item.work_date)) }}</td>
+                <td>{{ props.item.added }}</td>
+                <td>{{ props.item.removed }}</td>
+                <td>{{ props.item.total }}</td>
+              </template>
+            </v-data-table>
+          </v-card-text>
         </v-card>
       </v-flex>
     </v-layout>
