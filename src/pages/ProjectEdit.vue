@@ -1,10 +1,10 @@
 <template>
   <v-container fluid grid-list-md>
     <v-layout row>
-      <v-flex xs12 lg8 xl6>
+      <v-flex xs12 xl8>
         <v-card class="mt-4">
           <v-card-title>
-            <v-container class="primary white--text card-header elevation-1">
+            <v-container fluid class="primary white--text card-header elevation-1">
               <v-layout>
                 <v-flex>
                   <span class="title">{{ title }}</span><br />
@@ -143,8 +143,8 @@ export default {
         'goal_type_id': this.project.goalTypeId,
         'goal_amount': this.project.goalAmount,
         'start_amount': this.project.startAmount,
-        'start_date': this.project.startDate,
         'due_date': this.project.dueDate,
+        'start_date': this.project.startDate,
         'last_update': this.project.lastUpdate,
         'is_finished': false
       }

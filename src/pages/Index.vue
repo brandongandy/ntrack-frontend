@@ -1,7 +1,7 @@
 <template>
   <v-container fluid grid-list-md>
     <v-layout row wrap>
-      <v-flex xs12 md6 lg4>
+      <v-flex xs12 md6 xl4>
         <v-card class="mt-4">
           <v-card-title>
             <v-container class="primary white--text card-header elevation-1">
@@ -20,7 +20,7 @@
           </v-card-actions>
         </v-card>
       </v-flex>
-      <v-flex xs12 md6 lg4>
+      <v-flex xs12 md6 xl4>
         <v-card class="mt-4">
           <v-card-title>
             <v-container class="primary white--text card-header elevation-1">
@@ -39,7 +39,7 @@
           </v-card-actions>
         </v-card>
       </v-flex>
-      <v-flex md12 lg8>
+      <v-flex md12 xl8>
         <v-card class="mt-4">
           <v-card-title>
             <v-container class="primary white--text card-header elevation-1">
