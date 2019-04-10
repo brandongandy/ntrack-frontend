@@ -1,7 +1,7 @@
 <template>
   <v-card class="mt-4">
       <v-card-title>
-        <v-container class="white--text card-header elevation-1" :class="determineHeaderBackground">
+        <v-container fluid class="white--text card-header elevation-1" :class="determineHeaderBackground">
           <v-layout align-center>
             <v-flex>
               <span class="title">{{ project.name }}</span><v-spacer></v-spacer>
@@ -34,11 +34,10 @@
         </v-container>
       </v-card-title>
       <v-card-text>
-        <!-- <p v-if="!inList">{{ project.goal_amount }} words before {{ project.due_date }}</p> -->
         <v-layout row wrap class="mx-2">
           <v-flex>
             <span class="subheading">
-              {{ project.word_count }} / {{ project.goal_amount }}
+              {{ project.word_count }} of {{ project.goal_amount }} words
             </span>
           </v-flex>
           <v-flex shrink>
