@@ -23,3 +23,9 @@ export function GET_LATEST_PROJECT (state) {
     }
   )
 }
+
+export function SET_CURRENT_PROJECT (state, id) {
+  // $route.params passes strings -- if id is pulled from route param
+  // we need to parse it before using it.
+  state.currentProject = state.projectList.find(project => project.id === parseInt(id))
+}

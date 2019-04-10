@@ -2,7 +2,7 @@
   <v-container fluid grid-list-md>
     <v-layout row wrap>
       <v-flex xs12>
-        <project-summary :project="project" :inList="false" />
+        <project-summary v-if="project !== undefined" :project="project" :inList="false" />
       </v-flex>
       <v-flex>
         <v-card>
@@ -78,10 +78,12 @@
 import UpdateGoal from '../components/UpdateGoal'
 import ProjectSummary from '@/components/ProjectSummary'
 import { format } from 'date-fns'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   data () {
     return {
+      loaded: false,
       headers: [
         { text: 'Work Date', value: 'work_date' },
         { text: 'Added', value: 'added' },
@@ -95,8 +97,7 @@ export default {
         { work_date: '2019-03-03', added: 268, removed: -10, total: 258 },
         { work_date: '2019-03-04', added: 1765, removed: -243, total: 1522 }
       ],
-      isBusy: true,
-      project: {}
+      isBusy: true
     }
   },
   components: {
@@ -104,11 +105,25 @@ export default {
     ProjectSummary
   },
   computed: {
+    ...mapGetters({
+      currentProject: 'project/getCurrentProject'
+    }),
     projectId () {
       return this.$route.params.id
+    },
+    project: {
+      get: function () {
+        return this.currentProject
+      },
+      set: function (id) {
+        this.setCurrentProject(id)
+      }
     }
   },
   methods: {
+    ...mapActions({
+      setCurrentProject: 'project/setCurrentProject'
+    }),
     onSubmit (e) {
       e.preventDefault()
     },
@@ -131,18 +146,11 @@ export default {
     }
   },
   created () {
-    this.$axios.get('/projects/' + this.projectId).then(
-      res => {
-        this.project = res.data
-      },
-      err => {
-        this.$alert.warning({ message: err })
-      }
-    )
-
+    this.project = this.projectId
     this.$axios.get('/projects/' + this.projectId + '/entries').then(
       res => {
         this.entries = res.data
+        this.loaded = true
       },
       err => {
         this.$alert.warning({ message: err })

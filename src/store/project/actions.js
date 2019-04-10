@@ -13,3 +13,7 @@ export function getAllProjects (context) {
 export function getLatestProject (context) {
   context.commit('GET_LATEST_PROJECT')
 }
+
+export function setCurrentProject (context, id) {
+  context.commit('SET_CURRENT_PROJECT', id)
+}
