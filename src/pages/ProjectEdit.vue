@@ -23,14 +23,19 @@
                     :rules="nameRules"
                     label="Project Name"
                     required></v-text-field>
-                    <v-select box
-                      v-model="project.type"
-                      :rules="typeRules"
-                      :items="projectTypes"
-                      label="Project Type"></v-select>
+                  <v-select box
+                    v-model="project.typeId"
+                    :rules="typeRules"
+                    :items="projectTypes"
+                    label="Project Type"></v-select>
+                  <v-select box
+                    v-if="project.typeId === 1 || project.typeId === 2"
+                    v-model="project.genreId"
+                    :items="genreTypes"
+                    label="Genre"></v-select>
                   <v-textarea box
                     v-model="project.blurb"
-                    label="Blurb"></v-textarea>
+                    label="Blurb / Synopsis"></v-textarea>
                   <v-text-field box
                     v-model="project.goalAmount"
                     label="Project Goal"
@@ -42,7 +47,7 @@
                     label="Already started?"></v-checkbox>
                   <v-text-field box :disabled="!project.started"
                     v-model="project.startAmount"
-                    label="Start Amount"
+                    label="Words Already Written"
                     mask="#########"></v-text-field>
                   <v-menu
                     v-model="menu"
@@ -54,7 +59,7 @@
                     <template v-slot:activator="{ on }">
                       <v-text-field box
                         v-model="project.dueDate"
-                        label="Picker without buttons"
+                        label="Due Date"
                         prepend-inner-icon="event"
                         readonly
                         v-on="on">
@@ -96,10 +101,18 @@ export default {
         { value: 2, text: 'Short Story / Other' },
         { value: 3, text: 'Article / Essay' }
       ],
+      genreTypes: [
+        { value: 1, text: '' },
+        { value: 2, text: 'Fantasy' },
+        { value: 3, text: 'Science Fiction' },
+        { value: 4, text: 'Literary Fiction' },
+        { value: 5, text: 'Horror' }
+      ],
       project: {
         id: null,
         name: '',
-        type: 1,
+        typeId: null,
+        genreId: null,
         blurb: '',
         goalTypeId: 1,
         goalAmount: 0,
@@ -125,7 +138,7 @@ export default {
       let project = {
         'user_id': this.$auth.userId,
         'name': this.project.name,
-        'project_type_id': this.project.type,
+        'project_type_id': this.project.typeId,
         'blurb': this.project.blurb,
         'goal_type_id': this.project.goalTypeId,
         'goal_amount': this.project.goalAmount,
