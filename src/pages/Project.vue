@@ -37,7 +37,7 @@
           <v-card-text class="mx-2">
             <v-layout row wrap justify-center>
               <v-flex lg8>
-                <v-sheet color="white">
+                <v-sheet>
                   <v-sparkline v-if="loaded"
                     :value="progressWords"
                     color="orange"
