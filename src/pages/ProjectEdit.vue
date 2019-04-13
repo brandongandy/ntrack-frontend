@@ -32,6 +32,8 @@
                     v-if="project.typeId === 1 || project.typeId === 2"
                     v-model="project.genreId"
                     :items="genreTypes"
+                    item-text="description"
+                    item-value="id"
                     label="Genre"></v-select>
                   <v-textarea box
                     v-model="project.blurb"
@@ -120,7 +122,7 @@ export default {
         startAmount: 0,
         startDate: new Date().toISOString().substr(0, 10),
         dueDate: new Date().toISOString().substr(0, 10),
-        lastUpdate: new Date().toISOString().substr(0, 10)
+        lastUpdate: new Date().toISOString()
       },
       nameRules: [
         v => !!v || 'Project name cannot be blank'
@@ -167,9 +169,8 @@ export default {
           }
         )
       }
-      this.$axios.put('/projects', payload).then(
+      this.$axios.put('/projects/', payload).then(
         res => {
-          this.$alert.success({ message: 'Project added!' })
           this.$router.push('/projects')
         },
         err => {
@@ -183,7 +184,7 @@ export default {
       return this.$route.params.id
     }
   },
-  created () {
+  mounted () {
     if (this.projectId) {
       this.title = 'Editing project: '
       this.$axios.get('/projects/' + this.projectId).then(
@@ -198,6 +199,16 @@ export default {
     } else {
       this.title = 'Start New Project'
     }
+
+    this.$axios.get('/projects/genres/all').then(
+      res => {
+        console.log(res.data)
+        this.genreTypes = res.data
+      },
+      err => {
+        console.log(err)
+      }
+    )
   }
 }
 </script>
