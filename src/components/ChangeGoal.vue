@@ -11,12 +11,16 @@
         <v-container grid-list-md>
           <v-layout wrap>
             <v-flex>
-              <v-text-field box
-                label="New Goal"
-                v-model="goalAmount"
-                v-if="dialog"
-                autofocus
-                mask="#########" required></v-text-field>
+              <v-form v-model="valid">
+                <v-text-field box
+                  label="New Goal"
+                  v-model="goalAmount"
+                  :rules="amountRules"
+                  v-if="dialog"
+                  autofocus
+                  type="number"
+                  required></v-text-field>
+              </v-form>
             </v-flex>
           </v-layout>
         </v-container>
@@ -24,26 +28,38 @@
 
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn color="blue-grey" small dark flat @click="onReset">Cancel</v-btn>
-        <v-btn color="green" small dark @click="dialog = false">Update</v-btn>
+        <v-btn color="secondary" small flat @click="onReset">Cancel</v-btn>
+        <v-btn
+          :disabled="!valid"
+          color="primary" small
+          @click="onSubmit">Update</v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 export default {
   props: ['goal'],
   data () {
     return {
+      valid: true,
       dialog: false,
       title: 'Set New Work Goal',
       addType: 0,
       newGoal: {},
-      goalAmount: 0
+      goalAmount: 0,
+      amountRules: [
+        amount => !!amount || 'Amount is not a valid number',
+        amount => (!Number.isInteger(amount)) || 'Amount is not a valid number'
+      ]
     }
   },
   methods: {
+    ...mapActions({
+      getGoal: 'entry/getGoal'
+    }),
     onShown () {
       this.newGoal = Object.assign({}, this.goal)
     },
@@ -54,7 +70,9 @@ export default {
     },
     onReset (e) {
       e.preventDefault()
-      console.log(this.newGoal.goal_amount)
+
+      this.goalAmount = 0
+
       this.dialog = false
     },
     postGoal (newAmount) {
@@ -71,10 +89,8 @@ export default {
       )
     },
     closeModal (success) {
-      if (success) {
-        this.$emit('update:amount', this.newGoal.amount)
-      }
-      this.$refs.modal.hide()
+      this.getGoal()
+      this.dialog = false
     }
   },
   created () {
