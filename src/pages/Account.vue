@@ -1,7 +1,7 @@
 <template>
   <v-container fluid grid-list-md>
     <v-layout row wrap>
-      <v-flex xs12 xl6 class="mt-4">
+      <v-flex xs12 md6 class="mt-4">
         <v-card class="card-body">
           <v-card-title>
             <v-container fluid class="primary white--text card-header elevation-1">
@@ -48,22 +48,6 @@
                   </v-flex>
                 </v-flex>
                 <v-flex xs12>
-                  <p><span class="title">Author Info</span></p>
-                </v-flex>
-                <v-flex xs12 sm6>
-                  <v-select box
-                    :items="userTypes"
-                    label="I am a(n):">
-                  </v-select>
-                </v-flex>
-                <v-flex xs12 sm6>
-                  <v-select box  multiple
-                    persistent-hint
-                    :items="genres"
-                    label="I write:">
-                  </v-select>
-                </v-flex>
-                <v-flex xs12>
                   <v-textarea box
                     label="About Me">
                   </v-textarea>
@@ -79,7 +63,7 @@
         </v-card>
       </v-flex>
 
-      <v-flex xs12 md8 xl6 class="mt-4">
+      <v-flex xs12 md6 class="mt-4">
         <v-card class="card-body">
           <v-card-title>
             <v-container fluid class="primary white--text card-header elevation-1">
