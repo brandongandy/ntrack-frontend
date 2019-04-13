@@ -12,18 +12,23 @@
           <v-container grid-list-md>
             <v-layout wrap>
               <v-flex>
-                <v-text-field box
-                  label="Amount"
-                  v-model="amount"
-                  v-if="dialog"
-                  :autofocus="true"
-                  mask="#########" required></v-text-field>
-                <v-select box
-                  label="Project"
-                  v-model="projectId"
-                  :items="projectList"
-                  item-text="name"
-                  item-value="id" required></v-select>
+                <v-form v-model="valid">
+                  <v-text-field box
+                    label="Amount"
+                    v-model="amount"
+                    :rules="amountRules"
+                    v-if="dialog"
+                    :autofocus="true"
+                    type="number"
+                    required></v-text-field>
+                  <v-select box
+                    label="Project"
+                    v-model="projectId"
+                    :rules="projectRules"
+                    :items="projectList"
+                    item-text="name"
+                    item-value="id" required></v-select>
+                </v-form>
               </v-flex>
             </v-layout>
           </v-container>
@@ -31,8 +36,12 @@
 
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="blue-grey" small dark flat @click="onReset">Cancel</v-btn>
-          <v-btn color="primary" small dark @click="onSubmit">Submit</v-btn>
+          <v-btn color="secondary" small flat @click="onReset">Cancel</v-btn>
+          <v-btn
+            :disabled="!valid"
+            color="primary"
+            small
+            @click="onSubmit">Submit</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -49,11 +58,19 @@ export default {
   },
   data () {
     return {
+      valid: true,
       dialog: false,
       amount: 0,
       addType: 0,
       canChangeProject: false,
-      projectId: undefined
+      projectId: undefined,
+      amountRules: [
+        amount => (!Number.isInteger(amount)) || 'Amount is not a valid number',
+        amount => !!amount || 'Amount is not a valid number'
+      ],
+      projectRules: [
+        proj => !!proj || 'Please select a project'
+      ]
     }
   },
   computed: {
@@ -86,7 +103,6 @@ export default {
       }
 
       this.postWork(payload)
-      this.dialog = false
     },
     onReset (e) {
       e.preventDefault()
@@ -103,6 +119,9 @@ export default {
           }
           this.setGoal(newGoalObj)
           this.getLatestProject()
+
+          this.projectId = null
+          this.amount = 0
           this.dialog = false
         },
         err => {
