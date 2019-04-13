@@ -31,7 +31,7 @@
               </v-layout>
             </v-container>
           </v-card-title>
-          <v-card-text class="text-xs-center"><h3 class="display-2">{{ latestProject.name }}</h3>a Novel</v-card-text>
+          <v-card-text class="text-xs-center"><h3 class="display-2">{{ latestProjectName }}</h3>{{ latestProjectType }}</v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn small dark :color="newProjectColor" to="/projects/new">New Project</v-btn>
@@ -102,6 +102,12 @@ export default {
     }),
     newProjectColor () {
       return (this.latestProject.id ? 'blue-grey' : 'green')
+    },
+    latestProjectName () {
+      return (this.latestProject.id ? this.latestProject.name : 'No projects yet!')
+    },
+    latestProjectType () {
+      return (this.latestProject.type ? this.latestProject.type : 'Add one!')
     }
   },
   methods: {
@@ -112,16 +118,6 @@ export default {
     })
   },
   created () {
-    // let todayDate = format(new Date(), 'YYYY-MM-DD')
-    // this.$axios.get('/goals/' + todayDate)
-    //   .then(
-    //     res => {
-    //       this.goal = res.data
-    //     },
-    //     err => {
-    //       console.log(err)
-    //     }
-    //   )
     this.getGoal()
     this.getLatestProject()
 
