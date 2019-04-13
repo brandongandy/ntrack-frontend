@@ -111,20 +111,7 @@
 <script>
 export default {
   data () {
-    return {
-      userTypes: [
-        { value: 0, text: 'Author' }
-      ],
-      genres: [
-        { value: 0, text: 'Literary Fiction' },
-        { value: 1, text: 'Fantasy' },
-        { value: 2, text: 'Science Fiction' },
-        { value: 3, text: 'Westerns' }
-      ]
-    }
-  },
-  computed: {
-
+    return {}
   }
 }
 </script>
