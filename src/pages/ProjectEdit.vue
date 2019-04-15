@@ -193,7 +193,7 @@ export default {
           this.title += `${this.project.name}`
         },
         err => {
-          this.$alert.warning({ message: err })
+          console.log(err)
         }
       )
     } else {
@@ -202,7 +202,6 @@ export default {
 
     this.$axios.get('/projects/genres/all').then(
       res => {
-        console.log(res.data)
         this.genreTypes = res.data
       },
       err => {

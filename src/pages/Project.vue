@@ -177,12 +177,6 @@ export default {
     ...mapActions({
       setCurrentProject: 'project/setCurrentProject'
     }),
-    onSubmit (e) {
-      e.preventDefault()
-    },
-    updateGoal () {
-      this.$refs.updateDialog.show()
-    },
     deleteProject () {
       this.$axios.delete('/projects/' + this.projectId).then(
         res => {
