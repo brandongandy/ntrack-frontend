@@ -92,6 +92,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 export default {
   data () {
     return {
@@ -133,6 +134,9 @@ export default {
     }
   },
   methods: {
+    ...mapActions({
+      getAllProjects: 'project/getAllProjects'
+    }),
     onSubmit (e) {
       e.preventDefault()
       // this.$refs.projectForm.validate()
@@ -148,7 +152,8 @@ export default {
         'due_date': this.project.dueDate,
         'start_date': this.project.startDate,
         'last_update': this.project.lastUpdate,
-        'is_finished': false
+        'is_finished': false,
+        'genre_id': this.project.genreId
       }
 
       this.postProject(project)
@@ -171,7 +176,8 @@ export default {
       }
       this.$axios.put('/projects/', payload).then(
         res => {
-          this.$router.push('/projects')
+          this.getAllProjects()
+          this.$router.push('/projects/all')
         },
         err => {
           console.log(err)
