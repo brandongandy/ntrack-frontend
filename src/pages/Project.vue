@@ -2,34 +2,35 @@
   <v-container fluid grid-list-md>
     <v-layout row wrap>
       <v-flex xs12 lg6>
-        <project-summary v-if='project !== undefined' :project='project' :inList='false' />
+        <project-summary v-if="project !== undefined" :project="project" :inList="false" />
       </v-flex>
-      <v-flex xs12 lg6 class='mt-4'>
+      <v-flex xs12 lg6 class="mt-4">
         <v-card>
           <v-card-title>
-            <v-container fluid class='primary white--text card-header elevation-1'>
+            <v-container fluid class="primary white--text card-header elevation-1">
               <v-layout>
                 <v-flex>
-                  <span class='title'>Project Info</span><br />
+                  <span class="title">Project Info</span><br />
                 </v-flex>
               </v-layout>
             </v-container>
           </v-card-title>
-          <v-card-text class='mx-2'>
-            <p><span class='body-2'>Author: </span>{{ this.$auth.user.name }}</p>
-            <p><span class='body-2'>Genre: </span></p>
-            <p><span class='body-2'>Blurb / Synopsis:</span> {{ project.blurb }}</p>
-            <p><span class='body-2'>Due Date: </span>{{ project.due_date }}</p>
+          <v-card-text class="mx-2">
+            <p><span class="body-2">Author: </span>{{ this.$auth.user.name }}</p>
+            <p><span class="body-2">Genre: </span>{{ project.genre }}</p>
+            <p><span class="body-2">Project Type: </span>{{ project.project_type }}</p>
+            <p><span class="body-2">Blurb / Synopsis:</span> {{ project.blurb }}</p>
+            <p><span class="body-2">Due Date: </span>{{ project.due_date }}</p>
           </v-card-text>
         </v-card>
       </v-flex>
-      <v-flex xs12 class='mt-4'>
+      <v-flex xs12 class="mt-4">
         <v-card>
           <v-card-title>
-            <v-container fluid class='primary white--text card-header elevation-1'>
+            <v-container fluid class="primary white--text card-header elevation-1">
               <v-layout>
                 <v-flex>
-                  <span class='title'>Recent Activity</span><br />
+                  <span class="title">Recent Activity</span><br />
                 </v-flex>
               </v-layout>
             </v-container>
@@ -50,17 +51,17 @@
               </v-flex>
             </v-layout>
             <v-data-table
-              :headers='headers'
-              :items='entries'
-              :loading='!loaded'
-              class='elevation-1 mr-2'>
-              <v-progress-linear v-slot:progress color='primary' indeterminate></v-progress-linear>
+              :headers="headers"
+              :items="entries"
+              :loading="!loaded"
+              class="elevation-1 mr-2">
+              <v-progress-linear v-slot:progress color="primary" indeterminate></v-progress-linear>
               <template v-slot:no-data>
-                <v-alert :value='true' color='accent' icon='warning'>
+                <v-alert :value="true" color="accent" icon="warning">
                   Sorry, nothing to display here :(
                 </v-alert>
               </template>
-              <template v-slot:items='props'>
+              <template v-slot:items="props">
                 <td>{{ formatDate(new Date(props.item.work_date)) }}</td>
                 <td>{{ props.item.added }}</td>
                 <td>{{ props.item.removed }}</td>
@@ -74,9 +75,9 @@
     <v-layout row justify-end>
       <v-flex shrink>
         <v-tooltip top>
-          <template v-slot:activator='{ on }'>
+          <template v-slot:activator="{ on }">
             <v-btn icon
-              v-on='on'>
+              v-on="on">
               <v-icon>delete</v-icon>
             </v-btn>
           </template>
@@ -180,7 +181,6 @@ export default {
     deleteProject () {
       this.$axios.delete('/projects/' + this.projectId).then(
         res => {
-          // this.$alert.show({ message: `Project ${this.project.name} has been successfully deleted.` })
           this.$router.push('/projects')
         },
         err => {

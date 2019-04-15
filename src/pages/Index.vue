@@ -107,7 +107,7 @@ export default {
       return (this.latestProject.id ? this.latestProject.name : 'No projects yet!')
     },
     latestProjectType () {
-      return (this.latestProject.type ? this.latestProject.type : 'Add one!')
+      return (this.latestProject.project_type ? `A ${this.latestProject.project_type}` : 'Add one!')
     }
   },
   methods: {
