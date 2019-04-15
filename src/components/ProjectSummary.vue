@@ -52,12 +52,13 @@
       </v-card-text>
       <v-card-actions v-if="!inList" class="mr-4">
         <v-spacer></v-spacer>
-        <v-btn color="primary" small>Add Words</v-btn>
+        <update-goal :project="project" />
       </v-card-actions>
   </v-card>
 </template>
 
 <script>
+import UpdateGoal from '@/components/UpdateGoal'
 export default {
   props: {
     project: Object,
@@ -65,6 +66,9 @@ export default {
   },
   data () {
     return {}
+  },
+  components: {
+    UpdateGoal
   },
   computed: {
     percentFinished () {

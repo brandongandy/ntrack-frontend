@@ -27,7 +27,8 @@
                     :rules="projectRules"
                     :items="projectList"
                     item-text="name"
-                    item-value="id" required></v-select>
+                    item-value="id" required
+                    :disabled="canChangeProject"></v-select>
                 </v-form>
               </v-flex>
             </v-layout>
@@ -61,9 +62,7 @@ export default {
       valid: true,
       dialog: false,
       amount: 0,
-      addType: 0,
-      canChangeProject: false,
-      projectId: undefined,
+      id: null,
       amountRules: [
         amount => (!Number.isInteger(amount)) || 'Amount is not a valid number',
         amount => !!amount || 'Amount is not a valid number'
@@ -83,6 +82,21 @@ export default {
         return `Adding Words to ${this.project.name}`
       } else {
         return 'Add Words'
+      }
+    },
+    canChangeProject () {
+      return (this.project !== undefined)
+    },
+    projectId: {
+      get () {
+        if (this.project) {
+          return this.project.id
+        } else {
+          return this.id
+        }
+      },
+      set (val) {
+        this.id = val
       }
     }
   },
