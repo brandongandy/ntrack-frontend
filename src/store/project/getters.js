@@ -3,7 +3,7 @@ export function getProjectList (state) {
 }
 
 export function getLatestProject (state) {
-  return state.latestProject
+  return state.projectList.find(p => p !== undefined)
 }
 
 export function getCurrentProject (state) {

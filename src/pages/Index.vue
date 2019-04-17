@@ -113,14 +113,11 @@ export default {
   methods: {
     ...mapActions({
       getAllProjects: 'project/getAllProjects',
-      getLatestProject: 'project/getLatestProject',
       getGoal: 'entry/getGoal'
     })
   },
   created () {
     this.getGoal()
-    this.getLatestProject()
-
     this.getAllProjects()
     this.isFirstLoad = false
   }
