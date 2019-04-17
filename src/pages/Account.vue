@@ -18,18 +18,6 @@
                 <v-flex xs12>
                   <p><span class="title">Personal Info</span></p>
                 </v-flex>
-                <v-flex xs6>
-                  <v-flex xs12 sm8 offset-sm2>
-                    <v-img class="elevation-1 rounded"
-                      src="https://randomuser.me/api/portraits/lego/1.jpg">
-                    </v-img>
-                    <v-card-actions>
-                      <v-spacer></v-spacer>
-                      <v-btn small dark flat color="blue-grey">Update Photo</v-btn>
-                      <v-spacer></v-spacer>
-                    </v-card-actions>
-                  </v-flex>
-                </v-flex>
                 <v-flex>
                   <v-flex>
                     <v-text-field box
@@ -52,10 +40,21 @@
                     label="About Me">
                   </v-textarea>
                 </v-flex>
+                <v-flex xs12>
+                  <p><span class="title">Location</span></p>
+                </v-flex>
+                <v-flex>
+                  <v-select box
+                    label="Country">
+                  </v-select>
+                  <v-select box
+                    label="Time Zone">
+                  </v-select>
+                </v-flex>
               </v-layout>
             </v-form>
           </v-card-text>
-          <v-card-actions class="mr-4">
+          <v-card-actions>
             <v-spacer></v-spacer>
             <!-- <v-btn color="secondary" small dark flat>Cancel</v-btn> -->
             <v-btn color="primary" small dark>Update</v-btn>
@@ -81,23 +80,17 @@
                 <v-flex>
                   <span class="title">Public Information</span>
                   <v-switch
-                    label="Share my personal info (first name and last name only)">
+                    label="Make my account public (name and about me)">
                   </v-switch>
-                  <v-switch
-                    label="Share my author info (status, genres, about me)">
-                  </v-switch>
-                  <v-switch
-                    label="Let others send me messages through Inscripient">
-                  </v-switch>
-                  <v-switch
-                    label="Share my photo">
-                  </v-switch>
+                  <!-- <v-switch
+                    label="Let others send me messages through Quill Driver">
+                  </v-switch> -->
                 </v-flex>
               </v-layout>
             </v-form>
           </v-card-text>
 
-          <v-card-actions class="mr-4">
+          <v-card-actions>
             <v-spacer></v-spacer>
             <!-- <v-btn color="secondary" small dark flat>Cancel</v-btn> -->
             <v-btn color="primary" small dark>Update</v-btn>
