@@ -38,7 +38,7 @@
     </v-navigation-drawer>
     <v-toolbar class="primary" dark fixed app>
       <v-toolbar-side-icon @click.native="drawer = !drawer"></v-toolbar-side-icon>
-      <span class="title ml-3">Inscripient&nbsp;<span class="subheading">v0.2</span></span>
+      <span class="title ml-3">Quill Driver&nbsp;<span class="subheading">v0.3.1</span></span>
       <v-spacer></v-spacer>
       <v-btn flat icon><v-icon>power_settings_new</v-icon></v-btn>
     </v-toolbar>
