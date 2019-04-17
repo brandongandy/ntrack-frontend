@@ -1,6 +1,12 @@
 import api from '@/plugins/axios'
 
 export function SET_ALL_PROJECTS (state, data) {
+  data.sort(function compare (a, b) {
+    var firstDate = new Date(a.last_update)
+    var secondDate = new Date(b.last_update)
+    return firstDate - secondDate
+  })
+  SET_LATEST_PROJECT(state, data.find(p => p !== undefined))
   state.projectList = data
 }
 
