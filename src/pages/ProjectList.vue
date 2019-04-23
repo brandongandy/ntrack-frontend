@@ -9,31 +9,22 @@
                 <v-flex>
                   <span class="title">My Active Projects</span><v-spacer></v-spacer>
                 </v-flex>
-                <v-flex shrink class="pa-0">
-                  <v-tooltip top>
-                    <template v-slot:activator="{ on }">
-                      <v-btn icon small depressed class="ma-0"
-                        color="accent"
-                        v-on="on"
-                        to="/projects/new">
-                        <v-icon>add</v-icon>
-                      </v-btn>
-                    </template>
-                    <span>Add New Project</span>
-                  </v-tooltip>
-                </v-flex>
               </v-layout>
             </v-container>
           </v-card-title>
 
           <v-card-text>
-            <v-flex xs8></v-flex>
             <v-layout row wrap>
               <v-flex xs12 v-for="project in projectList" :key="project.id">
                 <project-summary :project="project" :inList="true" />
               </v-flex>
             </v-layout>
           </v-card-text>
+
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn small color="primary" to="/projects/new">New Project</v-btn>
+          </v-card-actions>
         </v-card>
       </v-flex>
     </v-layout>
