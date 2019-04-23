@@ -9,23 +9,6 @@
             <v-flex shrink class="pa-0">
               <v-tooltip top>
                 <template v-slot:activator="{ on }">
-                  <v-btn icon small class="ma-0"
-                    color="primary" dark v-if="inList"
-                    v-on="on"
-                    @click="$router.push('/projects/view/' + project.id)">
-                    <v-icon>arrow_forward</v-icon>
-                  </v-btn>
-                </template>
-                <span>View Project</span>
-              </v-tooltip>
-              <v-tooltip top>
-                <template v-slot:activator="{ on }">
-                  <v-btn icon small depressed class="ma-0"
-                    color="accent" v-if="!inList"
-                    v-on="on"
-                    @click="$router.push('edit/' + project.id)">
-                    <v-icon>settings</v-icon>
-                  </v-btn>
                 </template>
                 <span>Edit Project Details</span>
               </v-tooltip>
@@ -50,9 +33,17 @@
           </v-flex>
         </v-layout>
       </v-card-text>
-      <v-card-actions v-if="!inList" class="mr-4">
+      <v-card-actions>
         <v-spacer></v-spacer>
-        <update-goal :project="project" />
+        <v-btn small class="ma-0"
+          color="primary" dark v-if="inList"
+          @click="$router.push('/projects/view/' + project.id)">View Project</v-btn>
+        <v-btn small dark class="ma-0"
+          color="blue-grey" v-if="!inList"
+          @click="$router.push('/projects/edit/' + project.id)">
+          Edit Project
+        </v-btn>
+        <update-goal v-if="!inList" :project="project" />
       </v-card-actions>
   </v-card>
 </template>
