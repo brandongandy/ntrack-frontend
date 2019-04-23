@@ -24,13 +24,13 @@
                     label="Project Name"
                     required></v-text-field>
                   <v-select box
-                    v-model="project.typeId"
+                    v-model="project.project_type_id"
                     :rules="typeRules"
                     :items="projectTypes"
                     label="Project Type"></v-select>
                   <v-select box
-                    v-if="project.typeId === 1 || project.typeId === 2"
-                    v-model="project.genreId"
+                    v-if="project.project_type_id === 1 || project.project_type_id === 2"
+                    v-model="project.genre_id"
                     :items="genreTypes"
                     item-text="description"
                     item-value="id"
@@ -39,16 +39,19 @@
                     v-model="project.blurb"
                     label="Blurb / Synopsis"></v-textarea>
                   <v-text-field box
-                    v-model="project.goalAmount"
+                    v-model="project.goal_amount"
                     label="Project Goal"
                     mask="#########"
                     required></v-text-field>
                   <v-checkbox
                     color="primary"
-                    v-model="project.started"
+                    v-model="started"
+                    v-if="canChangeStart"
                     label="Already started?"></v-checkbox>
-                  <v-text-field box :disabled="!project.started"
-                    v-model="project.startAmount"
+                  <v-text-field box
+                    :disabled="!started"
+                    v-if="canChangeStart"
+                    v-model="project.start_amount"
                     label="Words Already Written"
                     mask="#########"></v-text-field>
                   <v-menu
@@ -60,7 +63,7 @@
                     min-width="290px">
                     <template v-slot:activator="{ on }">
                       <v-text-field box
-                        v-model="project.dueDate"
+                        v-model="project.due_date"
                         label="Due Date"
                         prepend-inner-icon="event"
                         readonly
@@ -68,7 +71,7 @@
                       </v-text-field>
                     </template>
                     <v-date-picker
-                      v-model="project.dueDate"
+                      v-model="project.due_date"
                       @input="menu = false">
                     </v-date-picker>
                   </v-menu>
@@ -99,6 +102,7 @@ export default {
       valid: true,
       menu: '',
       title: '',
+      started: false,
       projectTypes: [
         { value: 1, text: 'Novel' },
         { value: 2, text: 'Short Story / Other' },
@@ -114,16 +118,14 @@ export default {
       project: {
         id: null,
         name: '',
-        typeId: null,
-        genreId: null,
+        project_type_id: null,
+        genre_id: null,
         blurb: '',
-        goalTypeId: 1,
-        goalAmount: 0,
-        started: false,
-        startAmount: 0,
-        startDate: new Date().toISOString().substr(0, 10),
-        dueDate: new Date().toISOString().substr(0, 10),
-        lastUpdate: new Date().toISOString()
+        goal_amount: 0,
+        start_amount: 0,
+        start_date: new Date().toISOString().substr(0, 10),
+        due_date: new Date().toISOString().substr(0, 10),
+        last_update: new Date().toISOString()
       },
       nameRules: [
         v => !!v || 'Project name cannot be blank'
@@ -144,16 +146,15 @@ export default {
       let project = {
         'user_id': this.$auth.userId,
         'name': this.project.name,
-        'project_type_id': this.project.typeId,
+        'project_type_id': this.project.project_type_id,
         'blurb': this.project.blurb,
-        'goal_type_id': this.project.goalTypeId,
-        'goal_amount': this.project.goalAmount,
-        'start_amount': this.project.startAmount,
-        'due_date': this.project.dueDate,
-        'start_date': this.project.startDate,
-        'last_update': this.project.lastUpdate,
+        'goal_amount': this.project.goal_amount,
+        'start_amount': this.project.start_amount,
+        'due_date': this.project.due_date,
+        'start_date': this.project.start_date,
+        'last_update': this.project.last_update,
         'is_finished': false,
-        'genre_id': this.project.genreId
+        'genre_id': this.project.genre_id
       }
 
       this.postProject(project)
@@ -164,8 +165,7 @@ export default {
     },
     postProject (payload) {
       if (this.projectId) {
-        payload.push({ 'id': this.projectId })
-        this.$axios.post('/projects/' + payload.id, payload).then(
+        this.$axios.post('/projects/' + this.projectId, this.project).then(
           res => {
             // do
           },
@@ -173,21 +173,25 @@ export default {
             this.$alert.warning({ message: err })
           }
         )
+      } else {
+        this.$axios.put('/projects/', payload).then(
+          res => {
+            this.getAllProjects()
+            this.$router.push('/projects/all')
+          },
+          err => {
+            console.log(err)
+          }
+        )
       }
-      this.$axios.put('/projects/', payload).then(
-        res => {
-          this.getAllProjects()
-          this.$router.push('/projects/all')
-        },
-        err => {
-          console.log(err)
-        }
-      )
     }
   },
   computed: {
     projectId () {
       return this.$route.params.id
+    },
+    canChangeStart () {
+      return !this.projectId
     }
   },
   mounted () {
@@ -196,6 +200,7 @@ export default {
       this.$axios.get('/projects/' + this.projectId).then(
         res => {
           this.project = res.data
+          this.project.due_date = new Date(res.data.due_date).toISOString().substring(0, 10)
           this.title += `${this.project.name}`
         },
         err => {
