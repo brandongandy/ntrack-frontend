@@ -7,7 +7,7 @@ import authConfig from '../../auth_config.json'
 let webAuth = new auth0.WebAuth({
   domain: 'ntrack.auth0.com',
   clientID: '3Eqou2Vrji1OHJQ3ojsX5VnuqVJjwp8n',
-  redirectUri: 'https://ntrack-frontend.herokuapp.com/callback',
+  redirectUri: 'https://ntrack-frontend.herokuapp.com/#/callback',
   responseType: 'token id_token',
   scope: 'openid profile email',
   audience: 'https://ntrack/api'
@@ -65,7 +65,7 @@ let auth = new Vue({
         localStorage.removeItem('expires_at')
         localStorage.removeItem('user')
         webAuth.logout({
-          returnTo: 'https://ntrack-frontend.herokuapp.com/logout',
+          returnTo: 'https://ntrack-frontend.herokuapp.com/#/logout',
           clientID: authConfig.clientId
         })
       })
