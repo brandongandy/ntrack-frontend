@@ -1,21 +1,20 @@
-# ntrack
+# Quill Driver
 
-> A Vue.js project
+This is the front end project for a tool called Quill Driver, a project management tool for writers.
 
-## Build Setup
+Quill Driver lets you manage and track your progress for writing novels, short stories, essays, etc., based on the premise that real achievement is through continuous, small efforts instead of sparse, massive pushes.
 
-``` bash
-# install dependencies
-npm install
+## Overview & Current Status
+![homepage](static/homepage.png)
+![progress-update](static/progress-update.png)
 
-# serve with hot reload at localhost:8080
-npm run dev
+Quill Driver is currently just a "dummy" front-end, set up to learn Vue.js and Quasar, and to scaffold designs and iterate quickly over them.
 
-# build for production with minification
-npm run build
-
-# build for production and view the bundle analyzer report
-npm run build --report
-```
-
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+## Planned Features
+* Writing Project Management
+  * Word count, page count, hourly tracking
+  * Writing statistics over time
+  * Automatic goal calculation
+* Query Management
+  * Inbox / outbox for tracking queries sent to editors or agents
+  * Query status updates to view progress toward getting published
