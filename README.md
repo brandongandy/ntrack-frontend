@@ -1,6 +1,6 @@
 # Quill Driver
 
-This is the front end project for a tool called Quill Driver, a project management tool for writers.
+This is the front end project for a tool called Quill Driver (originally called "ntrack"), a project management tool for writers.
 
 Quill Driver lets you manage and track your progress for writing novels, short stories, essays, etc., based on the premise that real achievement is through continuous, small efforts instead of sparse, massive pushes.
 
